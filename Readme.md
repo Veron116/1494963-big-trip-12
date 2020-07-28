@@ -1,7 +1,7 @@
 # Личный проект «Большое путешествие» [![Build status][travis-image]][travis-url]
 
-* Студент: [Вероника Рыжкова](https://up.htmlacademy.ru/ecmascript/12/user/1494963).
-* Наставник: `Неизвестно`.
+- Студент: [Вероника Рыжкова](https://up.htmlacademy.ru/ecmascript/12/user/1494963).
+- Наставник: `Сергей Вохмянин`.
 
 ---
 
