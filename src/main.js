@@ -292,3 +292,69 @@ render(chooseEventWrapElement, chooseEventHeaderTemplate(), 'afterbegin');
 render(chooseEventWrapElement, chooseEventDetailsTemplate(), 'beforeend');
 /*******E: New Event with destination **********/
 
+/*******S: Trip Days **********/
+const createTripDaysWrapTemplate = () => {
+    return (
+        `<ul class="trip-days"></ul>`
+    );
+};
+const createDayItemElement = () => {
+    return (
+        `<li class="trip-days__item  day"></li>`
+    );
+}
+const createDayElement = () => {
+    return (
+        `<div class="day__info">
+            <span class="day__counter">1</span>
+            <time class="day__date" datetime="2019-03-18">MAR 18</time>
+        </div>
+        <ul class="trip-events__list"></ul>`
+    );
+};
+const dayEventTemplate = () => {
+    return (
+        `<div class="event">
+            <div class="event__type">
+                <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
+            </div>
+            <h3 class="event__title">Taxi to Amsterdam</h3>
+
+            <div class="event__schedule">
+                <p class="event__time">
+                    <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+                    &mdash;
+                    <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+                </p>
+                <p class="event__duration">30M</p>
+            </div>
+
+            <p class="event__price">
+            &euro;&nbsp;<span class="event__price-value">20</span>
+            </p>
+
+            <h4 class="visually-hidden">Offers:</h4>
+            <ul class="event__selected-offers">
+                <li class="event__offer">
+                    <span class="event__offer-title">Order Uber</span>
+                    &plus;
+                    &euro;&nbsp;<span class="event__offer-price">20</span>
+                </li>
+            </ul>
+
+            <button class="event__rollup-btn" type="button">
+                <span class="visually-hidden">Open event</span>
+            </button>
+        </div>`
+    );
+};
+render(contentElement, createTripDaysWrapTemplate(), 'beforeend');
+const tripDayWrapElement = contentElement.querySelector('.trip-days');
+render(tripDayWrapElement, createDayItemElement(), 'afterbegin');
+const tripDayItem = tripDayWrapElement.querySelector('.trip-days__item');
+render(tripDayItem, createDayElement(), 'afterbegin');
+const tripDayEvent = tripDayWrapElement.querySelector('.trip-events__list');
+for (let i = 0; i < 3; i++) {//добавила 3 для наглядности. В будущем это будет рефакториться
+    render(tripDayEvent, dayEventTemplate(), 'afterbegin');
+}
+/*******E: Trip Days **********/
