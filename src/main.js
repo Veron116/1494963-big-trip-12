@@ -4,6 +4,7 @@ const render = (container, template, place) => {
     container.insertAdjacentHTML(place, template);
 };
 
+/*******S: Header Block **********/
 const createTripInfoTmplate = () => {
     return (
         `<section class="trip-main__trip-info  trip-info">
@@ -19,7 +20,6 @@ const createTripInfoTmplate = () => {
         </section>`
     );
 };
-
 const createTabsHeaderTemplate = () => {
     return (
         `<nav class="trip-controls__trip-tabs  trip-tabs">
@@ -28,7 +28,6 @@ const createTabsHeaderTemplate = () => {
         </nav>`
     );
 };
-
 const createTabsFiltersTemplate = () => {
     return (
         `<form class="trip-filters" action="#" method="get">
@@ -51,8 +50,6 @@ const createTabsFiltersTemplate = () => {
       </form>`
     );
 };
-
-
 const headerElement = document.querySelector('.page-header');
 const tripMainElement = headerElement.querySelector('.trip-main');
 const tabsControlsElement = headerElement.querySelector('.trip-controls');
@@ -60,7 +57,11 @@ const tabsControlsElement = headerElement.querySelector('.trip-controls');
 render(tripMainElement, createTripInfoTmplate(), 'afterbegin');
 render(tabsControlsElement, createTabsHeaderTemplate(), 'afterbegin');
 render(tabsControlsElement, createTabsFiltersTemplate(), 'beforeend');
+/*******E: Header Block **********/
 
+const contentElement = document.querySelector('.trip-events');
+
+/*******S: Sort Block **********/
 const createSortTemplate = () => {
     return (
         `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
@@ -95,6 +96,10 @@ const createSortTemplate = () => {
         </form>`
     );
 };
+render(contentElement, createSortTemplate(), 'afterbegin');
+/*******E: Sort Block **********/
+
+/*******S: New Event with destination **********/
 const chooseEventWrapTemlate = () => {
     return (
         `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`
@@ -281,11 +286,9 @@ const chooseEventDetailsTemplate = () => {
     );
 };
 
-
-const contentElement = document.querySelector('.trip-events');
-render(contentElement, createSortTemplate(), 'afterbegin');
 render(contentElement, chooseEventWrapTemlate(), 'beforeend');
 const chooseEventWrapElement = contentElement.querySelector('.trip-events__item');
 render(chooseEventWrapElement, chooseEventHeaderTemplate(), 'afterbegin');
 render(chooseEventWrapElement, chooseEventDetailsTemplate(), 'beforeend');
+/*******E: New Event with destination **********/
 
