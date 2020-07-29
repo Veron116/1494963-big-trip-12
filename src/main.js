@@ -1,13 +1,11 @@
-"use strict";
+`use strict`;
 
 const render = (container, template, place) => {
     container.insertAdjacentHTML(place, template);
 };
 
-/*******S: Header Block **********/
 const createTripInfoTmplate = () => {
-    return (
-        `<section class="trip-main__trip-info  trip-info">
+    return `<section class="trip-main__trip-info  trip-info">
             <div class="trip-info__main">
                 <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
 
@@ -17,20 +15,16 @@ const createTripInfoTmplate = () => {
             <p class="trip-info__cost">
             Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
             </p>
-        </section>`
-    );
+        </section>`;
 };
 const createTabsHeaderTemplate = () => {
-    return (
-        `<nav class="trip-controls__trip-tabs  trip-tabs">
+    return `<nav class="trip-controls__trip-tabs  trip-tabs">
             <a class="trip-tabs__btn" href="#">Table</a>
             <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Stats</a>
-        </nav>`
-    );
+        </nav>`;
 };
 const createTabsFiltersTemplate = () => {
-    return (
-        `<form class="trip-filters" action="#" method="get">
+    return `<form class="trip-filters" action="#" method="get">
             <div class="trip-filters__filter">
                 <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything" checked>
                 <label class="trip-filters__filter-label" for="filter-everything">Everything</label>
@@ -47,24 +41,20 @@ const createTabsFiltersTemplate = () => {
             </div>
 
             <button class="visually-hidden" type="submit">Accept filter</button>
-      </form>`
-    );
+      </form>`;
 };
-const headerElement = document.querySelector('.page-header');
-const tripMainElement = headerElement.querySelector('.trip-main');
-const tabsControlsElement = headerElement.querySelector('.trip-controls');
+const headerElement = document.querySelector(`.page-header`);
+const tripMainElement = headerElement.querySelector(`.trip-main`);
+const tabsControlsElement = headerElement.querySelector(`.trip-controls`);
 
-render(tripMainElement, createTripInfoTmplate(), 'afterbegin');
-render(tabsControlsElement, createTabsHeaderTemplate(), 'afterbegin');
-render(tabsControlsElement, createTabsFiltersTemplate(), 'beforeend');
-/*******E: Header Block **********/
+render(tripMainElement, createTripInfoTmplate(), `afterbegin`);
+render(tabsControlsElement, createTabsHeaderTemplate(), `afterbegin`);
+render(tabsControlsElement, createTabsFiltersTemplate(), `beforeend`);
 
-const contentElement = document.querySelector('.trip-events');
+const contentElement = document.querySelector(`.trip-events`);
 
-/*******S: Sort Block **********/
 const createSortTemplate = () => {
-    return (
-        `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+    return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
             <span class="trip-sort__item  trip-sort__item--day">Day</span>
 
             <div class="trip-sort__item  trip-sort__item--event">
@@ -93,21 +83,15 @@ const createSortTemplate = () => {
             </div>
 
             <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
-        </form>`
-    );
+        </form>`;
 };
-render(contentElement, createSortTemplate(), 'afterbegin');
-/*******E: Sort Block **********/
+render(contentElement, createSortTemplate(), `afterbegin`);
 
-/*******S: New Event with destination **********/
 const chooseEventWrapTemlate = () => {
-    return (
-        `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`
-    );
+    return `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`;
 };
 const chooseEventHeaderTemplate = () => {
-    return (
-        `<header class="event__header">
+    return `<header class="event__header">
             <div class="event__type-wrapper">
                 <label class="event__type  event__type-btn" for="event-type-toggle-1">
                     <span class="visually-hidden">Choose event type</span>
@@ -211,12 +195,10 @@ const chooseEventHeaderTemplate = () => {
 
             <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
             <button class="event__reset-btn" type="reset">Cancel</button>
-        </header>`
-    );
+        </header>`;
 };
 const chooseEventDetailsTemplate = () => {
-    return (
-        `<section class="event__details">
+    return `<section class="event__details">
         <section class="event__section  event__section--offers">
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
@@ -282,39 +264,29 @@ const chooseEventDetailsTemplate = () => {
             </div>
           </div>
         </section>
-      </section>`
-    );
+      </section>`;
 };
 
-render(contentElement, chooseEventWrapTemlate(), 'beforeend');
-const chooseEventWrapElement = contentElement.querySelector('.trip-events__item');
-render(chooseEventWrapElement, chooseEventHeaderTemplate(), 'afterbegin');
-render(chooseEventWrapElement, chooseEventDetailsTemplate(), 'beforeend');
-/*******E: New Event with destination **********/
+render(contentElement, chooseEventWrapTemlate(), `beforeend`);
+const chooseEventWrapElement = contentElement.querySelector(`.trip-events__item`);
+render(chooseEventWrapElement, chooseEventHeaderTemplate(), `afterbegin`);
+render(chooseEventWrapElement, chooseEventDetailsTemplate(), `beforeend`);
 
-/*******S: Trip Days **********/
 const createTripDaysWrapTemplate = () => {
-    return (
-        `<ul class="trip-days"></ul>`
-    );
+    return `<ul class="trip-days"></ul>`;
 };
 const createDayItemElement = () => {
-    return (
-        `<li class="trip-days__item  day"></li>`
-    );
-}
+    return `<li class="trip-days__item  day"></li>`;
+};
 const createDayElement = () => {
-    return (
-        `<div class="day__info">
+    return `<div class="day__info">
             <span class="day__counter">1</span>
             <time class="day__date" datetime="2019-03-18">MAR 18</time>
         </div>
-        <ul class="trip-events__list"></ul>`
-    );
+        <ul class="trip-events__list"></ul>`;
 };
 const dayEventTemplate = () => {
-    return (
-        `<div class="event">
+    return `<div class="event">
             <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
             </div>
@@ -345,16 +317,14 @@ const dayEventTemplate = () => {
             <button class="event__rollup-btn" type="button">
                 <span class="visually-hidden">Open event</span>
             </button>
-        </div>`
-    );
+        </div>`;
 };
-render(contentElement, createTripDaysWrapTemplate(), 'beforeend');
-const tripDayWrapElement = contentElement.querySelector('.trip-days');
-render(tripDayWrapElement, createDayItemElement(), 'afterbegin');
-const tripDayItem = tripDayWrapElement.querySelector('.trip-days__item');
-render(tripDayItem, createDayElement(), 'afterbegin');
-const tripDayEvent = tripDayWrapElement.querySelector('.trip-events__list');
-for (let i = 0; i < 3; i++) {//добавила 3 для наглядности. В будущем это будет рефакториться
-    render(tripDayEvent, dayEventTemplate(), 'afterbegin');
+render(contentElement, createTripDaysWrapTemplate(), `beforeend`);
+const tripDayWrapElement = contentElement.querySelector(`.trip-days`);
+render(tripDayWrapElement, createDayItemElement(), `afterbegin`);
+const tripDayItem = tripDayWrapElement.querySelector(`.trip-days__item`);
+render(tripDayItem, createDayElement(), `afterbegin`);
+const tripDayEvent = tripDayWrapElement.querySelector(`.trip-events__list`);
+for (let i = 0; i < 3; i++) {
+    render(tripDayEvent, dayEventTemplate(), `afterbegin`);
 }
-/*******E: Trip Days **********/
