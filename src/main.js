@@ -1,11 +1,11 @@
-`use strict`;
+'use strict';
 
 const render = (container, template, place) => {
-    container.insertAdjacentHTML(place, template);
+  container.insertAdjacentHTML(place, template);
 };
 
 const createTripInfoTmplate = () => {
-    return `<section class="trip-main__trip-info  trip-info">
+  return `<section class="trip-main__trip-info  trip-info">
             <div class="trip-info__main">
                 <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
 
@@ -18,13 +18,13 @@ const createTripInfoTmplate = () => {
         </section>`;
 };
 const createTabsHeaderTemplate = () => {
-    return `<nav class="trip-controls__trip-tabs  trip-tabs">
+  return `<nav class="trip-controls__trip-tabs  trip-tabs">
             <a class="trip-tabs__btn" href="#">Table</a>
             <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Stats</a>
         </nav>`;
 };
 const createTabsFiltersTemplate = () => {
-    return `<form class="trip-filters" action="#" method="get">
+  return `<form class="trip-filters" action="#" method="get">
             <div class="trip-filters__filter">
                 <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything" checked>
                 <label class="trip-filters__filter-label" for="filter-everything">Everything</label>
@@ -54,7 +54,7 @@ render(tabsControlsElement, createTabsFiltersTemplate(), `beforeend`);
 const contentElement = document.querySelector(`.trip-events`);
 
 const createSortTemplate = () => {
-    return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+  return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
             <span class="trip-sort__item  trip-sort__item--day">Day</span>
 
             <div class="trip-sort__item  trip-sort__item--event">
@@ -88,10 +88,10 @@ const createSortTemplate = () => {
 render(contentElement, createSortTemplate(), `afterbegin`);
 
 const chooseEventWrapTemlate = () => {
-    return `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`;
+  return `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`;
 };
 const chooseEventHeaderTemplate = () => {
-    return `<header class="event__header">
+  return `<header class="event__header">
             <div class="event__type-wrapper">
                 <label class="event__type  event__type-btn" for="event-type-toggle-1">
                     <span class="visually-hidden">Choose event type</span>
@@ -198,7 +198,7 @@ const chooseEventHeaderTemplate = () => {
         </header>`;
 };
 const chooseEventDetailsTemplate = () => {
-    return `<section class="event__details">
+  return `<section class="event__details">
         <section class="event__section  event__section--offers">
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
@@ -273,20 +273,20 @@ render(chooseEventWrapElement, chooseEventHeaderTemplate(), `afterbegin`);
 render(chooseEventWrapElement, chooseEventDetailsTemplate(), `beforeend`);
 
 const createTripDaysWrapTemplate = () => {
-    return `<ul class="trip-days"></ul>`;
+  return `<ul class="trip-days"></ul>`;
 };
 const createDayItemElement = () => {
-    return `<li class="trip-days__item  day"></li>`;
+  return `<li class="trip-days__item  day"></li>`;
 };
 const createDayElement = () => {
-    return `<div class="day__info">
+  return `<div class="day__info">
             <span class="day__counter">1</span>
             <time class="day__date" datetime="2019-03-18">MAR 18</time>
         </div>
         <ul class="trip-events__list"></ul>`;
 };
 const dayEventTemplate = () => {
-    return `<div class="event">
+  return `<div class="event">
             <div class="event__type">
                 <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
             </div>
@@ -326,5 +326,5 @@ const tripDayItem = tripDayWrapElement.querySelector(`.trip-days__item`);
 render(tripDayItem, createDayElement(), `afterbegin`);
 const tripDayEvent = tripDayWrapElement.querySelector(`.trip-events__list`);
 for (let i = 0; i < 3; i++) {
-    render(tripDayEvent, dayEventTemplate(), `afterbegin`);
+  render(tripDayEvent, dayEventTemplate(), `afterbegin`);
 }
