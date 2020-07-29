@@ -4,7 +4,7 @@ const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const createTripInfoTmplate = () => {
+const createTripInfoTemplate = () => {
   return `<section class="trip-main__trip-info  trip-info">
             <div class="trip-info__main">
                 <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
@@ -47,7 +47,7 @@ const headerElement = document.querySelector(`.page-header`);
 const tripMainElement = headerElement.querySelector(`.trip-main`);
 const tabsControlsElement = headerElement.querySelector(`.trip-controls`);
 
-render(tripMainElement, createTripInfoTmplate(), `afterbegin`);
+render(tripMainElement, createTripInfoTemplate(), `afterbegin`);
 render(tabsControlsElement, createTabsHeaderTemplate(), `afterbegin`);
 render(tabsControlsElement, createTabsFiltersTemplate(), `beforeend`);
 
@@ -87,7 +87,7 @@ const createSortTemplate = () => {
 };
 render(contentElement, createSortTemplate(), `afterbegin`);
 
-const chooseEventWrapTemlate = () => {
+const chooseEventWrapTemplate = () => {
   return `<form class="trip-events__item  event  event--edit" action="#" method="post"></form>`;
 };
 const chooseEventHeaderTemplate = () => {
@@ -267,7 +267,7 @@ const chooseEventDetailsTemplate = () => {
       </section>`;
 };
 
-render(contentElement, chooseEventWrapTemlate(), `beforeend`);
+render(contentElement, chooseEventWrapTemplate(), `beforeend`);
 const chooseEventWrapElement = contentElement.querySelector(`.trip-events__item`);
 render(chooseEventWrapElement, chooseEventHeaderTemplate(), `afterbegin`);
 render(chooseEventWrapElement, chooseEventDetailsTemplate(), `beforeend`);
