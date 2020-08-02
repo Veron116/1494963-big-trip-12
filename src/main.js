@@ -1,14 +1,14 @@
-import {tripInfo} from './view/trip-info';
-import {tabsHeader} from './view/tabs-header';
-import {tabsFilters} from './view/tabs-filters';
-import {sort} from './view/sort';
-import {eventWrap} from './view/event-wrap';
-import {eventHeader} from './view/event-header';
-import {eventDetails} from './view/event-details';
-import {tripDaysWrap} from './view/trip-days-wrap';
-import {tripDayItem} from './view/trip-day-item';
-import {dayInfo} from './view/day-info';
-import {dayEvent} from './view/day-event';
+import {createTripInfo} from './view/trip-info';
+import {createTabsHeader} from './view/tabs-header';
+import {createTabsFilters} from './view/tabs-filters';
+import {createSort} from './view/sort';
+import {createEventWrap} from './view/event-wrap';
+import {createEventHeader} from './view/event-header';
+import {createEventDetails} from './view/event-details';
+import {createTripDaysWrap} from './view/trip-days-wrap';
+import {createTripDayItem} from './view/trip-day-item';
+import {createDayInfo} from './view/day-info';
+import {createDayEvent} from './view/day-event';
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -17,21 +17,21 @@ const render = (container, template, place) => {
 const headerElement = document.querySelector(`.page-header`);
 const tripMainElement = headerElement.querySelector(`.trip-main`);
 const tabsControlsElement = headerElement.querySelector(`.trip-controls`);
-render(tripMainElement, tripInfo(), `afterbegin`);
-render(tabsControlsElement, tabsHeader(), `afterbegin`);
-render(tabsControlsElement, tabsFilters(), `beforeend`);
+render(tripMainElement, createTripInfo(), `afterbegin`);
+render(tabsControlsElement, createTabsHeader(), `afterbegin`);
+render(tabsControlsElement, createTabsFilters(), `beforeend`);
 const contentElement = document.querySelector(`.trip-events`);
-render(contentElement, sort(), `afterbegin`);
-render(contentElement, eventWrap(), `beforeend`);
+render(contentElement, createSort(), `afterbegin`);
+render(contentElement, createEventWrap(), `beforeend`);
 const chooseEventWrapElement = contentElement.querySelector(`.trip-events__item`);
-render(chooseEventWrapElement, eventHeader(), `afterbegin`);
-render(chooseEventWrapElement, eventDetails(), `beforeend`);
-render(contentElement, tripDaysWrap(), `beforeend`);
+render(chooseEventWrapElement, createEventHeader(), `afterbegin`);
+render(chooseEventWrapElement, createEventDetails(), `beforeend`);
+render(contentElement, createTripDaysWrap(), `beforeend`);
 const tripDayWrapElement = contentElement.querySelector(`.trip-days`);
-render(tripDayWrapElement, tripDayItem(), `afterbegin`);
+render(tripDayWrapElement, createTripDayItem(), `afterbegin`);
 const tripDayElement = tripDayWrapElement.querySelector(`.trip-days__item`);
-render(tripDayElement, dayInfo(), `afterbegin`);
+render(tripDayElement, createDayInfo(), `afterbegin`);
 const tripDayEvent = tripDayWrapElement.querySelector(`.trip-events__list`);
 for (let i = 0; i < 3; i++) {
-  render(tripDayEvent, dayEvent(), `afterbegin`);
+  render(tripDayEvent, createDayEvent(), `afterbegin`);
 }

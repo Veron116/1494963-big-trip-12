@@ -1,4 +1,4 @@
-export const dayEvent = () => {
+export const createDayEvent = () => {
   return `<div class="event">
               <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
