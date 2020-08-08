@@ -1,16 +1,19 @@
 import {isChecked} from '../utils';
+import {generateDestinationInfo} from '../mock/event';
 
-const createOfferTemplate = (offer) => {
+console.log(generateDestinationInfo());
+
+const createOfferTemplate = ({type, name, price}) => {
   return `
     <div class="event__offer-selector">
       <input class="event__offer-checkbox  visually-hidden" 
-      id="event-offer-${offer.type}-1" 
-      type="checkbox" name="event-offer-${offer.type}" 
+      id="event-offer-${type}-1" 
+      type="checkbox" name="event-offer-${type}" 
       ${isChecked() ? `checked` : ``}>
-      <label class="event__offer-label" for="event-offer-${offer.type}-1">
-        <span class="event__offer-title">${offer.name}</span>
+      <label class="event__offer-label" for="event-offer-${type}-1">
+        <span class="event__offer-title">${name}</span>
         &plus;
-        &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+        &euro;&nbsp;<span class="event__offer-price">${price}</span>
       </label>
     </div>
   `;
@@ -30,7 +33,7 @@ export const createEventDetails = (offers) => {
   
           <section class="event__section  event__section--destination">
             <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-            <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+            <p class="event__destination-description">${generateDestinationInfo()}</p>
   
             <div class="event__photos-container">
               <div class="event__photos-tape">
