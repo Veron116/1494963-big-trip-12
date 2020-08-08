@@ -4,12 +4,12 @@ import {tabsFilters} from './view/tabs-filters';
 import {sort} from './view/sort';
 import {eventWrap} from './view/event-wrap';
 import {createEventHeaderTemplate} from './view/event-header';
-import {eventDetails} from './view/event-details';
+import {createEventDetails} from './view/event-details';
 import {tripDaysWrap} from './view/trip-days-wrap';
 import {tripDayItem} from './view/trip-day-item';
 import {dayInfo} from './view/day-info';
 import {dayEvent} from './view/day-event';
-import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES} from './const';
+import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -26,7 +26,7 @@ render(contentElement, sort(), `afterbegin`);
 render(contentElement, eventWrap(), `beforeend`);
 const chooseEventWrapElement = contentElement.querySelector(`.trip-events__item`);
 render(chooseEventWrapElement, createEventHeaderTemplate(TRANSPORT_TYPE, SERVICE_TYPE, CITIES), `afterbegin`);
-render(chooseEventWrapElement, eventDetails(), `beforeend`);
+render(chooseEventWrapElement, createEventDetails(OFFERS), `beforeend`);
 render(contentElement, tripDaysWrap(), `beforeend`);
 const tripDayWrapElement = contentElement.querySelector(`.trip-days`);
 render(tripDayWrapElement, tripDayItem(), `afterbegin`);
