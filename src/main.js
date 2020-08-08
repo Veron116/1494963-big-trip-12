@@ -10,7 +10,9 @@ import {tripDayItem} from './view/trip-day-item';
 import {dayInfo} from './view/day-info';
 import {dayEvent} from './view/day-event';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
+import {generatePhotoSrcs} from './mock/event';
 
+console.log(generatePhotoSrcs());
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -26,7 +28,7 @@ render(contentElement, sort(), `afterbegin`);
 render(contentElement, eventWrap(), `beforeend`);
 const chooseEventWrapElement = contentElement.querySelector(`.trip-events__item`);
 render(chooseEventWrapElement, createEventHeaderTemplate(TRANSPORT_TYPE, SERVICE_TYPE, CITIES), `afterbegin`);
-render(chooseEventWrapElement, createEventDetails(OFFERS), `beforeend`);
+render(chooseEventWrapElement, createEventDetails(OFFERS, generatePhotoSrcs()), `beforeend`);
 render(contentElement, tripDaysWrap(), `beforeend`);
 const tripDayWrapElement = contentElement.querySelector(`.trip-days`);
 render(tripDayWrapElement, tripDayItem(), `afterbegin`);

@@ -1,8 +1,6 @@
 import {isChecked} from '../utils';
 import {generateDestinationInfo} from '../mock/event';
 
-console.log(generateDestinationInfo());
-
 const createOfferTemplate = ({type, name, price}) => {
   return `
     <div class="event__offer-selector">
@@ -19,8 +17,13 @@ const createOfferTemplate = ({type, name, price}) => {
   `;
 };
 
-export const createEventDetails = (offers) => {
+const createPhotoTemplate = (src) => {
+  return `<img class="event__photo" src=${src} alt="Event photo">`;
+};
+
+export const createEventDetails = (offers, srcs) => {
   const offerTemplate = offers.map((offer) => createOfferTemplate(offer)).join(``);
+  const photoTemplate = srcs.map((src) => createPhotoTemplate(src));
 
   return `<section class="event__details">
           <section class="event__section  event__section--offers">
@@ -37,11 +40,7 @@ export const createEventDetails = (offers) => {
   
             <div class="event__photos-container">
               <div class="event__photos-tape">
-                <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-                <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
-                <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
-                <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
-                <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
+                ${photoTemplate}
               </div>
             </div>
           </section>
