@@ -36,7 +36,6 @@ const generateCity = () => {
 };
 
 const generateOffer = () => {
-  console.log(OFFERS[getRandomInteger(0, OFFERS.length - 1)]);
   return OFFERS[getRandomInteger(0, OFFERS.length - 1)];
 };
 

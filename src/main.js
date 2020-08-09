@@ -1,7 +1,7 @@
 import {render} from './utils';
 import {tripInfo} from './view/trip-info';
-import {tabsHeader} from './view/tabs-header';
-import {tabsFilters} from './view/tabs-filters';
+import {createTabsHeader} from './view/tabs-header';
+import {createTabsFilters} from './view/tabs-filters';
 import {sort} from './view/sort';
 import {eventWrap} from './view/event-wrap';
 import {createEventHeaderTemplate} from './view/event-header';
@@ -11,20 +11,20 @@ import {tripDayItem} from './view/trip-day-item';
 import {dayInfo} from './view/day-info';
 import {createDayEvent} from './view/day-event';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
-import {generatePhotoSrcs} from './mock/event';
+import {generatePhotoSrcs} from './utils';
 import {generateEvent} from './mock/event';
+import {filterTabs, filterTypes} from './mock/filter';
 
 const EVENT_COUNT = 15;
 
 const events = new Array(EVENT_COUNT).fill().map(generateEvent);
-console.log(events);
 
 const headerElement = document.querySelector(`.page-header`);
 const tripMainElement = headerElement.querySelector(`.trip-main`);
 const tabsControlsElement = headerElement.querySelector(`.trip-controls`);
 render(tripMainElement, tripInfo(), `afterbegin`);
-render(tabsControlsElement, tabsHeader(), `afterbegin`);
-render(tabsControlsElement, tabsFilters(), `beforeend`);
+render(tabsControlsElement, createTabsHeader(filterTabs), `afterbegin`);
+render(tabsControlsElement, createTabsFilters(filterTypes), `beforeend`);
 const contentElement = document.querySelector(`.trip-events`);
 render(contentElement, sort(), `afterbegin`);
 render(contentElement, eventWrap(), `beforeend`);

@@ -1,5 +1,5 @@
 import {isChecked} from '../utils';
-import {generateDestinationInfo} from '../mock/event';
+import {generateDestinationInfo} from '../utils';
 
 const createOfferTemplate = ({type, name, price}) => {
   return `
