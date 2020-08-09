@@ -1,3 +1,4 @@
+import {render} from './utils';
 import {tripInfo} from './view/trip-info';
 import {tabsHeader} from './view/tabs-header';
 import {tabsFilters} from './view/tabs-filters';
@@ -8,14 +9,15 @@ import {createEventDetails} from './view/event-details';
 import {tripDaysWrap} from './view/trip-days-wrap';
 import {tripDayItem} from './view/trip-day-item';
 import {dayInfo} from './view/day-info';
-import {dayEvent} from './view/day-event';
+import {createDayEvent} from './view/day-event';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
 import {generatePhotoSrcs} from './mock/event';
+import {generateEvent} from './mock/event';
 
-console.log(generatePhotoSrcs());
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
+const EVENT_COUNT = 15;
+
+const events = new Array(EVENT_COUNT).fill().map(generateEvent);
+console.log(events);
 
 const headerElement = document.querySelector(`.page-header`);
 const tripMainElement = headerElement.querySelector(`.trip-main`);
@@ -35,6 +37,6 @@ render(tripDayWrapElement, tripDayItem(), `afterbegin`);
 const tripDayElement = tripDayWrapElement.querySelector(`.trip-days__item`);
 render(tripDayElement, dayInfo(), `afterbegin`);
 const tripDayEvent = tripDayWrapElement.querySelector(`.trip-events__list`);
-for (let i = 0; i < 3; i++) {
-  render(tripDayEvent, dayEvent(), `afterbegin`);
+for (let i = 0; i < EVENT_COUNT; i++) {
+  render(tripDayEvent, createDayEvent(events[i]), `afterbegin`);
 }

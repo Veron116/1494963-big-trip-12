@@ -1,4 +1,5 @@
 import {getRandomInteger} from '../utils';
+import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from '../const';
 
 export const generateDestinationInfo = () => {
   function shuffle(a) {
@@ -23,4 +24,33 @@ export const generatePhotoSrcs = () => {
     srcs.push(`http://picsum.photos/248/152?r=${getRandomInteger(1, 5000)}`);
   }
   return srcs;
+};
+
+const generateCheckinType = () => {
+  let checkinTypes = TRANSPORT_TYPE.concat(SERVICE_TYPE);
+  return checkinTypes[getRandomInteger(0, checkinTypes.length - 1)];
+};
+
+const generateCity = () => {
+  return CITIES[getRandomInteger(0, CITIES.length - 1)];
+};
+
+const generateOffer = () => {
+  console.log(OFFERS[getRandomInteger(0, OFFERS.length - 1)]);
+  return OFFERS[getRandomInteger(0, OFFERS.length - 1)];
+};
+
+export const generateEvent = () => {
+  const date = () => {
+    console.log(new Date());
+  };
+  return {
+    date,
+    description: generateDestinationInfo(),
+    photos: generatePhotoSrcs(),
+    checkin_type: generateCheckinType(),
+    city: generateCity(),
+    offer: generateOffer(),
+    isCheked: Boolean(getRandomInteger(0, 1)),
+  };
 };
