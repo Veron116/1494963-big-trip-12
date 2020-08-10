@@ -39,7 +39,8 @@ export const createEventEditTemplate = (transports, services, cities) => {
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
 
-  return `<header class="event__header">
+  return `<form class="trip-events__item  event  event--edit" action="#" method="post">
+          <header class="event__header">
               <div class="event__type-wrapper">
                   <label class="event__type  event__type-btn" for="event-type-toggle-1">
                       <span class="visually-hidden">Choose event type</span>
@@ -64,7 +65,7 @@ export const createEventEditTemplate = (transports, services, cities) => {
                   <label class="event__label  event__type-output" for="event-destination-1">
                       Flight to
                   </label>
-                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
+                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="" list="destination-list-1">
                   <datalist id="destination-list-1">
                       ${cityTemplate}
                   </datalist>
@@ -102,5 +103,7 @@ export const createEventEditTemplate = (transports, services, cities) => {
   
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
               <button class="event__reset-btn" type="reset">Cancel</button>
-          </header>`;
+          </header>
+          </form>
+          <ul class="trip-days"></ul>`;
 };

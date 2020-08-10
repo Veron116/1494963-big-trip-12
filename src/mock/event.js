@@ -26,7 +26,6 @@ export const generateEvent = () => {
     let duration = new Date(endDate - startDate).getMinutes();
     return duration > 60 ? hours + `H ` + minutes + `M` : minutes + `M`;
   };
-  console.log(startDate + msInd);
 
   return {
     startDate: new Date(startDate),
