@@ -5,8 +5,6 @@ const createTabHeaderTemplate = (tab) => {
 };
 
 export const createTabsHeader = (tabs) => {
-  console.log(tabs);
-
   const tabHeaderTemplate = tabs.map((tab) => createTabHeaderTemplate(tab)).join(``);
 
   return `<nav class="trip-controls__trip-tabs  trip-tabs">

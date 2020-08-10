@@ -1,3 +1,6 @@
+import {generateRandomDate} from '../utils';
+import {TRIP_DAYS_COUNT} from '../const';
+
 const createWaypointTemplate = (waypoint) => {
   return `
     <div class="event__type-item">
@@ -12,7 +15,26 @@ const createCityTemplate = (city) => {
     `;
 };
 
-export const createEventHeaderTemplate = (transports, services, cities) => {
+function formatDate(date) {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear() - 2000;
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('/');
+}
+
+const countDates = () => {
+  return {
+    startDate: new Date(),
+    endDate: new Date(generateRandomDate(TRIP_DAYS_COUNT)),
+  };
+};
+
+export const createEventHeaderTemplate = (transports, services, cities, {city}) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -42,7 +64,7 @@ export const createEventHeaderTemplate = (transports, services, cities) => {
                   <label class="event__label  event__type-output" for="event-destination-1">
                       Flight to
                   </label>
-                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
                   <datalist id="destination-list-1">
                       ${cityTemplate}
                   </datalist>
@@ -52,12 +74,22 @@ export const createEventHeaderTemplate = (transports, services, cities) => {
                   <label class="visually-hidden" for="event-start-time-1">
                       From
                   </label>
-                  <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 00:00">
+                  <input 
+                  class="event__input  event__input--time" 
+                  id="event-start-time-1" 
+                  type="text" 
+                  name="event-start-time" 
+                  value="${formatDate(countDates().startDate)} ${countDates().startDate.getHours()}:${countDates().startDate.getMinutes()}">
                   &mdash;
                   <label class="visually-hidden" for="event-end-time-1">
                       To
                   </label>
-                  <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 00:00">
+                  <input 
+                  class="event__input  event__input--time" 
+                  id="event-end-time-1" 
+                  type="text" 
+                  name="event-end-time" 
+                  value="${formatDate(countDates().endDate)} ${countDates().endDate.getHours()}:${countDates().endDate.getMinutes()}">
               </div>
   
               <div class="event__field-group  event__field-group--price">
