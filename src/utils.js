@@ -37,3 +37,9 @@ export const generatePhotoSrcs = () => {
   }
   return srcs;
 };
+
+export const generateRandomDate = (tripDays) => {
+  const MS_IN_A_DAY = 1000 * 60 * 60 * 24;
+
+  return Date.now() + getRandomInteger(0, tripDays) * MS_IN_A_DAY;
+};

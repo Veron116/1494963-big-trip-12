@@ -28,3 +28,4 @@ export const OFFERS = [
     price: 40,
   },
 ];
+export const TRIP_DAYS_COUNT = 10;

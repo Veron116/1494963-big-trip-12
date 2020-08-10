@@ -34,7 +34,7 @@ const countDates = () => {
   };
 };
 
-export const createEventHeaderTemplate = (transports, services, cities, {city}) => {
+export const createEventEditTemplate = (transports, services, cities) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
