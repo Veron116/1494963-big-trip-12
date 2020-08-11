@@ -17,7 +17,6 @@ const generateOffer = () => {
 export const generateEvent = () => {
   const startDate = generateRandomDate(TRIP_DAYS_COUNT);
   const msInd = getRandomInteger(20, 180) * 60 * 1000;
-  //   const endDate = new Date(startDate + msInd);
   const endDate = startDate + msInd;
   const msIndInHours = msInd / 1000 / 60 / 60;
   const hours = Math.trunc(msIndInHours);

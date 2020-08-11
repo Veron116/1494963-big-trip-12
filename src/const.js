@@ -29,3 +29,4 @@ export const OFFERS = [
   },
 ];
 export const TRIP_DAYS_COUNT = 10;
+export const MS_IN_A_DAY = 1000 * 60 * 60 * 24;

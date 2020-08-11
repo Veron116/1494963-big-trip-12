@@ -104,6 +104,5 @@ export const createEventEditTemplate = (transports, services, cities) => {
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
               <button class="event__reset-btn" type="reset">Cancel</button>
           </header>
-          </form>
-          <ul class="trip-days"></ul>`;
+          </form>`;
 };

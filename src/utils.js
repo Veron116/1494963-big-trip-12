@@ -1,3 +1,5 @@
+import {MS_IN_A_DAY} from './const';
+
 export const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -39,7 +41,31 @@ export const generatePhotoSrcs = () => {
 };
 
 export const generateRandomDate = (tripDays) => {
-  const MS_IN_A_DAY = 1000 * 60 * 60 * 24;
-
   return Date.now() + getRandomInteger(0, tripDays) * MS_IN_A_DAY;
+};
+
+export const countDates = (tripDaysCount) => {
+  const startDate = new Date();
+  const endDate = new Date(generateRandomDate(tripDaysCount));
+  const diffTimeMs = Math.abs(endDate - startDate);
+  const diffTime = Math.ceil(diffTimeMs / MS_IN_A_DAY);
+  const fillDateList = () => {
+    const result = [];
+    let d = startDate;
+
+    for (let i = 0; i < diffTime; i++) {
+      result.push({
+        dateIndex: i + 1,
+        date: d,
+      });
+      d = new Date(d.getTime() + MS_IN_A_DAY);
+    }
+    return result;
+  };
+
+  return {
+    startDate,
+    endDate,
+    dateList: fillDateList(),
+  };
 };
