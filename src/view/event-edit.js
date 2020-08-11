@@ -1,5 +1,6 @@
 import {generateRandomDate} from '../utils';
 import {TRIP_DAYS_COUNT} from '../const';
+import {createEventDetails} from './event-details';
 
 const createWaypointTemplate = (waypoint) => {
   return `
@@ -34,7 +35,7 @@ const countDates = () => {
   };
 };
 
-export const createEventEditTemplate = (transports, services, cities) => {
+export const createEventEditTemplate = (transports, services, cities, offers, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -104,5 +105,6 @@ export const createEventEditTemplate = (transports, services, cities) => {
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
               <button class="event__reset-btn" type="reset">Cancel</button>
           </header>
+          ${createEventDetails(offers, srcs)}
           </form>`;
 };

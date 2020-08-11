@@ -1,6 +1,5 @@
-import {createEventDetails} from './event-details';
-
-export const sort = (offers, srcs) => {
+import {createDayList} from './day-list';
+export const sort = () => {
   return `<main class="page-body__page-main page-main">
             <div class="page-body__container">
                 <section class="trip-events">
@@ -36,9 +35,7 @@ export const sort = (offers, srcs) => {
                             <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
                         </form>
                         
-                    <ul class="trip-days">
-                    ${createEventDetails(offers, srcs)}
-                    </ul>
+                    ${createDayList()}
                     </section>
                 </div>
             </main>`;
