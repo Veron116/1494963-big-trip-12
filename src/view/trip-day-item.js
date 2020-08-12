@@ -8,7 +8,7 @@ export const createTripDayItem = ({dateList}, events, transports, services, citi
                 <div class="day__info">
                 <span class="day__counter">${day.dateIndex}</span>
                 <time class="day__date" datetime="2019-03-18">
-                ${day.date.toLocaleString('default', {month: 'short'})} ${day.date.getDate()}
+                ${day.date.toLocaleString(`default`, {month: `short`})} ${day.date.getDate()}
                 </time>
                 </div>
                 <ul class="trip-events__list">

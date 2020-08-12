@@ -34,7 +34,7 @@ export const generateEvent = () => {
     duration: addDuration(),
     description: generateDestinationInfo(),
     photos: generatePhotoSrcs(),
-    checkin_type: generateCheckinType(),
+    checkinType: generateCheckinType(),
     city: generateCity(),
     offer: generateOffer(),
     isCheked: Boolean(getRandomInteger(0, 1)),

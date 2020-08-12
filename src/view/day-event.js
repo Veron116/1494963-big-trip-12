@@ -1,9 +1,9 @@
-export const createDayEvent = ({checkin_type, city, offer}) => {
+export const createDayEvent = ({checkinType, city, offer}) => {
   return `<div class="event">
               <div class="event__type">
-                  <img class="event__type-icon" width="42" height="42" src="img/icons/${checkin_type.toLowerCase()}.png" alt="Event type icon">
+                  <img class="event__type-icon" width="42" height="42" src="img/icons/${checkinType.toLowerCase()}.png" alt="Event type icon">
               </div>
-              <h3 class="event__title">${checkin_type} to ${city}</h3>
+              <h3 class="event__title">${checkinType} to ${city}</h3>
   
               <div class="event__schedule">
                   <p class="event__time">
