@@ -1,4 +1,3 @@
-import {createDayList} from './day-list';
 export const sort = () => {
   return `<main class="page-body__page-main page-main">
             <div class="page-body__container">
@@ -34,8 +33,6 @@ export const sort = () => {
                 
                             <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
                         </form>
-                        
-                    ${createDayList()}
                     </section>
                 </div>
             </main>`;

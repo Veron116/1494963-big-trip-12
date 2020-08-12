@@ -1,5 +1,3 @@
-import {generateRandomDate} from '../utils';
-import {TRIP_DAYS_COUNT} from '../const';
 import {createEventDetails} from './event-details';
 
 const createWaypointTemplate = (waypoint) => {
@@ -16,30 +14,7 @@ const createCityTemplate = (city) => {
     `;
 };
 
-function formatDate(date) {
-  let d = new Date(date);
-  let month = `` + (d.getMonth() + 1);
-  let day = `` + d.getDate();
-  let year = d.getFullYear() - 2000;
-
-  if (month.length < 2) {
-    month = `0` + month;
-  }
-  if (day.length < 2) {
-    day = `0` + day;
-  }
-
-  return [year, month, day].join(`/`);
-}
-
-const countDates = () => {
-  return {
-    startDate: new Date(),
-    endDate: new Date(generateRandomDate(TRIP_DAYS_COUNT)),
-  };
-};
-
-export const createEventEditTemplate = (transports, services, cities, offers, srcs) => {
+export const createEventEditTemplate = ({startDate, endDate}, transports, services, cities, offers, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -85,7 +60,7 @@ export const createEventEditTemplate = (transports, services, cities, offers, sr
                   id="event-start-time-1" 
                   type="text" 
                   name="event-start-time" 
-                  value="${formatDate(countDates().startDate)} ${countDates().startDate.getHours()}:${countDates().startDate.getMinutes()}">
+                  value="${new Date(startDate).toString().slice(4, 21)}">
                   &mdash;
                   <label class="visually-hidden" for="event-end-time-1">
                       To
@@ -95,7 +70,7 @@ export const createEventEditTemplate = (transports, services, cities, offers, sr
                   id="event-end-time-1" 
                   type="text" 
                   name="event-end-time" 
-                  value="${formatDate(countDates().endDate)} ${countDates().endDate.getHours()}:${countDates().endDate.getMinutes()}">
+                  value="${new Date(endDate).toString().slice(4, 21)}">
               </div>
   
               <div class="event__field-group  event__field-group--price">

@@ -27,8 +27,8 @@ export const generateEvent = () => {
   };
 
   return {
-    startDate: new Date(startDate),
-    endDate: new Date(endDate),
+    startDate,
+    endDate,
     hours,
     minutes,
     duration: addDuration(),

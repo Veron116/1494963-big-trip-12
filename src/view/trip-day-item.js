@@ -1,29 +1,24 @@
 import {createEventEditTemplate} from './event-edit';
 import {createDayEvent} from './day-event';
 
-export const createTripDayItem = ({dateList}, events, transports, services, cities, offers, srcs) => {
-  const dayInfoTemplate = dateList
-    .map((day) => {
-      return `<li class="trip-days__item  day">
+export const createTripDayItem = (index, date, dayEvents, events, transports, services, cities, offers, srcs) => {
+  return `<li class="trip-days__item  day">
                 <div class="day__info">
-                <span class="day__counter">${day.dateIndex}</span>
-                <time class="day__date" datetime="2019-03-18">
-                ${day.date.toLocaleString(`default`, {month: `short`})} ${day.date.getDate()}
+                <span class="day__counter">${index + 1}</span>
+                <time class="day__date" datetime="${new Date(date).toString().slice(4, 11)}">
+                ${date}
                 </time>
                 </div>
                 <ul class="trip-events__list">
-                ${events
-                  .map((event, index) => {
-                    if (day.dateIndex === 1 && index === 0) {
-                      return createEventEditTemplate(transports, services, cities, offers, srcs);
+                
+                ${dayEvents
+                  .map((event, curIndex) => {
+                    if (index === 0 && curIndex === 0) {
+                      return createEventEditTemplate(event, transports, services, cities, offers, srcs);
                     }
                     return createDayEvent(event);
                   })
                   .join(``)}
                 </ul>
               </li>`;
-    })
-    .join(``);
-
-  return `${dayInfoTemplate}`;
 };

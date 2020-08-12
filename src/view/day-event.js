@@ -1,4 +1,4 @@
-export const createDayEvent = ({checkinType, city, offer}) => {
+export const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, minutes}) => {
   return `<div class="event">
               <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/${checkinType.toLowerCase()}.png" alt="Event type icon">
@@ -7,11 +7,15 @@ export const createDayEvent = ({checkinType, city, offer}) => {
   
               <div class="event__schedule">
                   <p class="event__time">
-                      <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+                      <time class="event__start-time" datetime="${new Date(startDate).toString().slice(4, 21)}">${new Date(startDate)
+    .toTimeString()
+    .slice(0, 5)}</time>
                       &mdash;
-                      <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+                      <time class="event__end-time" datetime="${new Date(endDate).toString().slice(4, 21)}">${new Date(endDate)
+    .toTimeString()
+    .slice(0, 5)}</time>
                   </p>
-                  <p class="event__duration">30M</p>
+                  <p class="event__duration">${hours}H ${minutes}M</p>
               </div>
   
               <p class="event__price">

@@ -4,15 +4,22 @@ import {tripInfo} from './view/trip-info';
 import {createTabsHeader} from './view/tabs-header';
 import {createTabsFilters} from './view/tabs-filters';
 import {sort} from './view/sort';
-import {createTripDayItem} from './view/trip-day-item';
-import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, TRIP_DAYS_COUNT} from './const';
-import {generatePhotoSrcs, countDates} from './utils';
+import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
+import {generatePhotoSrcs} from './utils';
 import {generateEvent} from './mock/event';
 import {filterTabs, filterTypes} from './mock/filter';
+import {createDayList} from './view/day-list';
 
-const EVENT_COUNT = 7;
+const EVENT_COUNT = 15;
 
-const events = new Array(EVENT_COUNT).fill().map(generateEvent);
+const events = new Array(EVENT_COUNT)
+  .fill()
+  .map(generateEvent)
+  .sort((a, b) => a.startDate - b.endDate);
+const getDatesStart = () => {
+  return events.map((event) => new Date(event.startDate));
+};
+const tripDaysDates = new Set(getDatesStart().map((date) => `${date}`.slice(4, 10)));
 
 const bodyElement = document.querySelector(`.page-body`);
 render(bodyElement, createHeaderTemplate(), `afterbegin`);
@@ -23,9 +30,8 @@ const tabsControlsElement = bodyElement.querySelector(`.trip-controls`);
 render(tabsControlsElement, createTabsHeader(filterTabs), `afterbegin`);
 render(tabsControlsElement, createTabsFilters(filterTypes), `beforeend`);
 const contentElement = bodyElement.querySelector(`.trip-events`);
-const tripDayWrapElement = contentElement.querySelector(`.trip-days`);
 render(
-  tripDayWrapElement,
-  createTripDayItem(countDates(TRIP_DAYS_COUNT), events, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs()),
-  `afterbegin`
+  contentElement,
+  createDayList(tripDaysDates, events, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs()),
+  `beforeend`
 );
