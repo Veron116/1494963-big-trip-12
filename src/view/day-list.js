@@ -1,4 +1,8 @@
 import {createTripDayItem} from './trip-day-item';
+/**
+ *
+ * @todo переделать даты вместо slice на встроенные методы даты
+ */
 
 export const createDayList = (dateList, events, transports, services, cities, offers, srcs) => {
   return `<ul class="trip-days">

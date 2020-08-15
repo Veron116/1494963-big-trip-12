@@ -1,17 +1,9 @@
-import {getRandomInteger, generateDestinationInfo, generatePhotoSrcs, generateRandomDate} from '../utils';
+import {getRandomInteger, getRandomItem, generateDestinationInfo, generatePhotoSrcs, generateRandomDate} from '../utils';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, TRIP_DAYS_COUNT} from '../const';
 
 const generateCheckinType = () => {
   let checkinTypes = TRANSPORT_TYPE.concat(SERVICE_TYPE);
-  return checkinTypes[getRandomInteger(0, checkinTypes.length - 1)];
-};
-
-const generateCity = () => {
-  return CITIES[getRandomInteger(0, CITIES.length - 1)];
-};
-
-const generateOffer = () => {
-  return OFFERS[getRandomInteger(0, OFFERS.length - 1)];
+  return getRandomItem(checkinTypes);
 };
 
 export const generateEvent = () => {
@@ -21,22 +13,17 @@ export const generateEvent = () => {
   const msIndInHours = msInd / 1000 / 60 / 60;
   const hours = Math.trunc(msIndInHours);
   const minutes = Math.trunc((msIndInHours - hours) * 60);
-  const addDuration = () => {
-    let duration = new Date(endDate - startDate).getMinutes();
-    return duration > 60 ? hours + `H ` + minutes + `M` : minutes + `M`;
-  };
 
   return {
     startDate,
     endDate,
     hours,
     minutes,
-    duration: addDuration(),
     description: generateDestinationInfo(),
     photos: generatePhotoSrcs(),
     checkinType: generateCheckinType(),
-    city: generateCity(),
-    offer: generateOffer(),
+    city: getRandomItem(CITIES),
+    offer: getRandomItem(OFFERS),
     isCheked: Boolean(getRandomInteger(0, 1)),
   };
 };
