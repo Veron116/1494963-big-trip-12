@@ -1,7 +1,30 @@
 import {MS_IN_A_DAY} from './const';
 
-export const render = (container, template, place) => {
+export const renderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+};
+
+export const renderTemplate = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
+};
+
+export const renderElement = (container, element, place) => {
+  switch (place) {
+    case renderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case renderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
 };
 
 export const getRandomInteger = (a = 0, b = 1) => {
