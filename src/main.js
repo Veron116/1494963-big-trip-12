@@ -1,8 +1,8 @@
 import HeaderView from './view/header';
-import {tripInfo} from './view/trip-info';
+import TripInfoView from './view/trip-info';
 import TabsHeaderView from './view/tabs-header';
 import TabsFiltersView from './view/tabs-filters';
-import {sort} from './view/sort';
+import SortView from './view/sort';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
 import {generatePhotoSrcs, renderTemplate, renderElement, renderPosition} from './utils';
 import {generateEvent} from './mock/event';
@@ -34,8 +34,9 @@ renderElement(
   renderPosition.BEFOREEND
 );
 
-renderTemplate(bodyElement, sort(), `beforeend`);
-// const tripMainElement = bodyElement.querySelector(`.trip-main`);
+renderElement(bodyElement, new SortView().getElement(), renderPosition.BEFOREEND);
+const tripMainElement = bodyElement.querySelector(`.trip-main`);
+renderElement(tripMainElement, new TripInfoView().getElement(), renderPosition.AFTERBEGIN);
 // renderTemplate(tripMainElement, tripInfo(), `afterbegin`);
 // const tabsControlsElement = new HeaderView().getElement().querySelector(`.trip-controls`);
 // renderTemplate(tabsControlsElement, createTabsHeader(filterTabs), `afterbegin`);
