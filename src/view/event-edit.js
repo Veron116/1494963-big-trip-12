@@ -1,4 +1,5 @@
-import {createEventDetails} from './event-details';
+import EventDetails from './event-details';
+import {createElement} from '../utils';
 
 /**
  *
@@ -6,20 +7,16 @@ import {createEventDetails} from './event-details';
  */
 
 const createWaypointTemplate = (waypoint) => {
-  return `
-    <div class="event__type-item">
+  return `<div class="event__type-item">
         <input id="event-type-${waypoint}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${waypoint}">
         <label class="event__type-label  event__type-label--${waypoint.toLowerCase()}" for="event-type-${waypoint}-1">${waypoint.toLowerCase()}</label>
-    </div>
-    `;
+    </div>`;
 };
 const createCityTemplate = (city) => {
-  return `
-        <option value="${city}"></option>
-    `;
+  return `<option value="${city}"></option>`;
 };
 
-export const createEventEditTemplate = ({startDate, endDate}, transports, services, cities, offers, srcs) => {
+const createEventEditTemplate = ({startDate, endDate}, transports, services, cities, offers, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -89,6 +86,36 @@ export const createEventEditTemplate = ({startDate, endDate}, transports, servic
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
               <button class="event__reset-btn" type="reset">Cancel</button>
           </header>
-          ${createEventDetails(offers, srcs)}
+
           </form>`;
 };
+
+export default class EventEdit {
+  constructor(event, transports, services, cities, offers, srcs) {
+    this._element = null;
+    this._event = event;
+    this._transports = transports;
+    this._services = services;
+    this._cities = cities;
+    this._offers = offers;
+    this._srcs = srcs;
+  }
+
+  getTemplate() {
+    return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._offers, this._srcs);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    const detailsContainer = this._element;
+    detailsContainer.appendChild(new EventDetails(this._offers, this._srcs).getElement());
+    this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

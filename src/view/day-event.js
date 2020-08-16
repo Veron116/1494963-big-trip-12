@@ -1,8 +1,9 @@
+import {createElement} from '../utils';
 /**
  *
  * @todo переделать даты вместо slice на встроенные методы даты
  */
-export const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, minutes}) => {
+const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, minutes}) => {
   return `<div class="event">
               <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/${checkinType.toLowerCase()}.png" alt="Event type icon">
@@ -40,3 +41,26 @@ export const createDayEvent = ({checkinType, city, offer, startDate, endDate, ho
               </button>
           </div>`;
 };
+
+export default class DayEvent {
+  constructor(event) {
+    this._element = null;
+    this._event = event;
+  }
+
+  getTemplate() {
+    return createDayEvent(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    return (this._element = null);
+  }
+}

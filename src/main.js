@@ -7,7 +7,7 @@ import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
 import {generatePhotoSrcs, renderTemplate, renderElement, renderPosition} from './utils';
 import {generateEvent} from './mock/event';
 import {filterTabs, filterTypes} from './mock/filter';
-import {createDayList} from './view/day-list';
+import DayList from './view/day-list';
 
 const EVENT_COUNT = 15;
 
@@ -37,13 +37,9 @@ renderElement(
 renderElement(bodyElement, new SortView().getElement(), renderPosition.BEFOREEND);
 const tripMainElement = bodyElement.querySelector(`.trip-main`);
 renderElement(tripMainElement, new TripInfoView().getElement(), renderPosition.AFTERBEGIN);
-// renderTemplate(tripMainElement, tripInfo(), `afterbegin`);
-// const tabsControlsElement = new HeaderView().getElement().querySelector(`.trip-controls`);
-// renderTemplate(tabsControlsElement, createTabsHeader(filterTabs), `afterbegin`);
-// renderTemplate(tabsControlsElement, createTabsFilters(filterTypes), `beforeend`);
-// const contentElement = bodyElement.querySelector(`.trip-events`);
-// renderTemplate(
-//   contentElement,
-//   createDayList(tripDaysDates, events, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs()),
-//   `beforeend`
-// );
+const contentElement = bodyElement.querySelector(`.trip-events`);
+renderElement(
+  contentElement,
+  new DayList(tripDaysDates, events, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs()).getElement(),
+  renderPosition.BEFOREEND
+);
