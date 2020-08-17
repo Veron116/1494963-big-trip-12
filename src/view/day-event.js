@@ -1,15 +1,19 @@
-import {createElement} from '../utils';
+import {createElement, replaceNewToOld, onEscKeyDown} from '../utils';
+import EventEditView from './event-edit';
+import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from '../const';
+//импортнуть константы для формы
 /**
  *
- * @todo переделать даты вместо slice на встроенные методы даты
+ * @todo - переделать даты вместо slice на встроенные методы даты
+ * - переделать логику с офферами и прайсом
  */
 const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, minutes}) => {
-  return `<div class="event">
+  return `<li class="trip-days__item  day">
+            <div class="event">
               <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/${checkinType.toLowerCase()}.png" alt="Event type icon">
               </div>
               <h3 class="event__title">${checkinType} to ${city}</h3>
-
               <div class="event__schedule">
                   <p class="event__time">
                       <time class="event__start-time" datetime="${new Date(startDate).toString().slice(4, 21)}">${new Date(startDate)
@@ -22,30 +26,31 @@ const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, mi
                   </p>
                   <p class="event__duration">${hours}H ${minutes}M</p>
               </div>
-
               <p class="event__price">
               &euro;&nbsp;<span class="event__price-value">${offer.price}</span>
               </p>
-
               <h4 class="visually-hidden">Offers:</h4>
               <ul class="event__selected-offers">
-                  <li class="event__offer">
-                      <span class="event__offer-title">${offer.name}</span>
-                      &plus;
-                      &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
-                  </li>
-              </ul>
-
-              <button class="event__rollup-btn" type="button">
-                  <span class="visually-hidden">Open event</span>
-              </button>
-          </div>`;
+                  ${Array.from(offer)
+                    .map(
+                      (item) => `<li class="event__offer">
+                  <span class="event__offer-title">${item.name}</span>
+                  &plus;
+                  &euro;&nbsp;<span class="event__offer-price">${item.price}</span>
+              </li>`
+                    )
+                    .join(
+                      ``
+                    )}</ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
 export default class DayEvent {
-  constructor(event) {
-    this._element = null;
+  constructor(event, srcs) {
     this._event = event;
+    this._editElement = null;
+    this._element = null;
+    this._srcs = srcs;
+    console.log(this._event);
   }
 
   getTemplate() {
@@ -55,9 +60,38 @@ export default class DayEvent {
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
+      this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, this._srcs).getElement();
     }
 
+    this._eventListeners(this._element, this._element.querySelector(`.event`), this._editElement);
     return this._element;
+  }
+
+  _eventListeners(container, card, form) {
+    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, (e) => {
+      replaceNewToOld(container, form, card);
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+    this._editElement.addEventListener(`submit`, (e) => {
+      e.preventDefault();
+      replaceNewToOld(container, card, form);
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+    this._editElement.querySelector(`.event__reset-btn`).addEventListener(`click`, (e) => {
+      e.preventDefault();
+      replaceNewToOld(container, card, form);
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+    const onEscKeyDown = (e) => {
+      if (e.key === `Escape` || e.key === `Esc`) {
+        e.preventDefault();
+        replaceNewToOld(container, card, form);
+        document.removeEventListener(`keydown`, onEscKeyDown);
+      }
+    };
   }
 
   removeElement() {

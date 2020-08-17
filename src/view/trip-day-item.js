@@ -1,4 +1,3 @@
-// import EventEditView from './event-edit';
 import DayEventView from './day-event';
 import {createElement} from '../utils';
 
@@ -60,10 +59,7 @@ export default class TripDayItem {
 
   _createDayEvents() {
     return this._dayEvents.map((event, curIndex) => {
-      // if (this._index === 0 && curIndex === 0) {
-      //   return new EventEditView(event, this._transports, this._services, this._cities, this._offers, this._srcs).getElement();
-      // }
-      return new DayEventView(event).getElement();
+      return new DayEventView(event, this._srcs).getElement();
     });
   }
 

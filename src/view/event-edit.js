@@ -112,7 +112,7 @@ export default class EventEdit {
 
     const detailsContainer = this._element;
     detailsContainer.appendChild(new EventDetails(this._offers, this._srcs).getElement());
-    this._element;
+    return this._element;
   }
 
   removeElement() {

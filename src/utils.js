@@ -96,3 +96,16 @@ export const countDates = (tripDaysCount) => {
 export const getRandomItem = (array) => {
   return array[getRandomInteger(0, array.length - 1)];
 };
+
+export const replaceNewToOld = (container, newElement, oldElement) => {
+  return container.replaceChild(newElement, oldElement);
+};
+
+// export const onEscKeyDown = (e, container, newElement, oldElement) => {
+//   console.log(e);
+//   if (e.key === `Escape` || e.key === `Esc`) {
+//     e.preventDefault();
+//     replaceNewToOld(container, newElement, oldElement);
+//     document.removeEventListener(onEscKeyDown);
+//   }
+// };

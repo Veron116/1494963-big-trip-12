@@ -1,4 +1,9 @@
 import {createElement} from '../utils';
+/**@todo добавить:
+ * - подмену локации
+ * - даты начала и конца
+ * - подсчет общего прайса
+ */
 
 const createTripInfoTemplate = () => {
   return `<section class="trip-main__trip-info  trip-info">

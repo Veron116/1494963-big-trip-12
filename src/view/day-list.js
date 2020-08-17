@@ -1,5 +1,6 @@
-import {createElement} from '../utils';
+import {createElement, replaceNewToOld, onEscKeyDown} from '../utils';
 import TripDayItemView from './trip-day-item';
+
 /**
  *
  * @todo переделать даты вместо slice на встроенные методы даты
@@ -29,6 +30,8 @@ export default class DayList {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
+
+    console.log(this._createDayItem());
 
     this._createDayItem().forEach((item) => this._element.appendChild(item));
     return this._element;
