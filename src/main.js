@@ -4,7 +4,7 @@ import TabsHeaderView from './view/tabs-header';
 import TabsFiltersView from './view/tabs-filters';
 import SortView from './view/sort';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from './const';
-import {generatePhotoSrcs, renderTemplate, renderElement, renderPosition} from './utils';
+import {generatePhotoSrcs, render, renderPosition} from './utils';
 import {generateEvent} from './mock/event';
 import {filterTabs, filterTypes} from './mock/filter';
 import DayList from './view/day-list';
@@ -22,23 +22,15 @@ const tripDaysDates = new Set(getDatesStart().map((date) => `${date}`.slice(4, 1
 
 const bodyElement = document.querySelector(`.page-body`);
 const headerElement = new HeaderView();
-renderElement(bodyElement, headerElement.getElement(), renderPosition.AFTERBEGIN);
-renderElement(
-  headerElement.getElement().querySelector(`.trip-controls`),
-  new TabsHeaderView(filterTabs).getElement(),
-  renderPosition.AFTERBEGIN
-);
-renderElement(
-  headerElement.getElement().querySelector(`.trip-controls`),
-  new TabsFiltersView(filterTypes).getElement(),
-  renderPosition.BEFOREEND
-);
+render(bodyElement, headerElement.getElement(), renderPosition.AFTERBEGIN);
+render(headerElement.getElement().querySelector(`.trip-controls`), new TabsHeaderView(filterTabs).getElement(), renderPosition.AFTERBEGIN);
+render(headerElement.getElement().querySelector(`.trip-controls`), new TabsFiltersView(filterTypes).getElement(), renderPosition.BEFOREEND);
 
-renderElement(bodyElement, new SortView().getElement(), renderPosition.BEFOREEND);
+render(bodyElement, new SortView().getElement(), renderPosition.BEFOREEND);
 const tripMainElement = bodyElement.querySelector(`.trip-main`);
-renderElement(tripMainElement, new TripInfoView().getElement(), renderPosition.AFTERBEGIN);
+render(tripMainElement, new TripInfoView().getElement(), renderPosition.AFTERBEGIN);
 const contentElement = bodyElement.querySelector(`.trip-events`);
-renderElement(
+render(
   contentElement,
   new DayList(tripDaysDates, events, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs()).getElement(),
   renderPosition.BEFOREEND
