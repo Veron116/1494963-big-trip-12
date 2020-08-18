@@ -1,6 +1,6 @@
 import {createElement, replaceNewToOld} from '../utils';
 import EventEditView from './event-edit';
-import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from '../const';
+import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES} from '../const';
 //импортнуть константы для формы
 /**
  *
@@ -59,7 +59,7 @@ export default class DayEvent {
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
-      this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, this._srcs).getElement();
+      this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs).getElement();
     }
 
     this._eventListeners(this._element, this._element.querySelector(`.event`), this._editElement);

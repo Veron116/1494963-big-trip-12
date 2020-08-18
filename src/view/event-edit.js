@@ -16,7 +16,7 @@ const createCityTemplate = (city) => {
   return `<option value="${city}"></option>`;
 };
 
-const createEventEditTemplate = ({startDate, endDate, offers, price}, transports, services, cities, srcs) => {
+const createEventEditTemplate = ({startDate, endDate, price}, transports, services, cities, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -91,18 +91,17 @@ const createEventEditTemplate = ({startDate, endDate, offers, price}, transports
 };
 
 export default class EventEdit {
-  constructor(event, transports, services, cities, offers, srcs) {
+  constructor(event, transports, services, cities, srcs) {
     this._element = null;
     this._event = event;
     this._transports = transports;
     this._services = services;
     this._cities = cities;
-    this._offers = offers;
     this._srcs = srcs;
   }
 
   getTemplate() {
-    return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._offers, this._srcs);
+    return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._srcs);
   }
 
   getElement() {
@@ -111,7 +110,7 @@ export default class EventEdit {
     }
 
     const detailsContainer = this._element;
-    detailsContainer.appendChild(new EventDetails(this._offers, this._srcs).getElement());
+    detailsContainer.appendChild(new EventDetails(this._event, this._srcs).getElement());
     return this._element;
   }
 

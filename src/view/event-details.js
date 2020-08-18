@@ -1,23 +1,11 @@
-import {isChecked, generateDestinationInfo, createElement} from '../utils';
+import {generateDestinationInfo, createElement} from '../utils';
 import {OFFERS} from '../const';
-
-const createOfferTemplate = (offers) => {
-  return ``;
-};
 
 const createPhotoTemplate = (src) => {
   return `<img class="event__photo" src=${src} alt="Event photo">`;
 };
 
-const createEventDetails = (offers, srcs) => {
-  console.log(offers);
-  // console.log(getRandomArray(offers));
-  // const offerTemplate = OFFERS.map((item) => {
-  //   if (item.name === offers.name) {
-  //     isChosen = true;
-  //     createOfferTemplate(offer, isChosen);
-  //   }
-  // }).join(``);
+const createEventDetails = ({offers}, srcs) => {
   const photoTemplate = srcs.map((src) => createPhotoTemplate(src));
 
   return `<section class="event__details">
@@ -56,14 +44,14 @@ const createEventDetails = (offers, srcs) => {
 };
 
 export default class EventDetails {
-  constructor(offers, srcs) {
+  constructor(event, srcs) {
     this._element = null;
-    this._offers = offers;
+    this._event = event;
     this._srcs = srcs;
   }
 
   getTemplate() {
-    return createEventDetails(this._offers, this._srcs);
+    return createEventDetails(this._event, this._srcs);
   }
 
   getElement() {
