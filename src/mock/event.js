@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomItem, generateDestinationInfo, generatePhotoSrcs, generateRandomDate} from '../utils';
+import {getRandomInteger, getRandomItem, generateDestinationInfo, generatePhotoSrcs, generateRandomDate, getRandomArray} from '../utils';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, TRIP_DAYS_COUNT} from '../const';
 
 const generateCheckinType = () => {
@@ -23,7 +23,7 @@ export const generateEvent = () => {
     photos: generatePhotoSrcs(),
     checkinType: generateCheckinType(),
     city: getRandomItem(CITIES),
-    offer: getRandomItem(OFFERS),
-    isCheked: Boolean(getRandomInteger(0, 1)),
+    offers: getRandomArray(OFFERS),
+    price: getRandomInteger(10, 900),
   };
 };

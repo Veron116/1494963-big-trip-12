@@ -1,4 +1,4 @@
-import {createElement, replaceNewToOld, onEscKeyDown} from '../utils';
+import {createElement, replaceNewToOld} from '../utils';
 import EventEditView from './event-edit';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from '../const';
 //импортнуть константы для формы
@@ -7,7 +7,7 @@ import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS} from '../const';
  * @todo - переделать даты вместо slice на встроенные методы даты
  * - переделать логику с офферами и прайсом
  */
-const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, minutes}) => {
+const createDayEvent = ({checkinType, city, startDate, endDate, hours, minutes, offers, price}) => {
   return `<li class="trip-days__item  day">
             <div class="event">
               <div class="event__type">
@@ -27,11 +27,11 @@ const createDayEvent = ({checkinType, city, offer, startDate, endDate, hours, mi
                   <p class="event__duration">${hours}H ${minutes}M</p>
               </div>
               <p class="event__price">
-              &euro;&nbsp;<span class="event__price-value">${offer.price}</span>
+              &euro;&nbsp;<span class="event__price-value">${price}</span>
               </p>
               <h4 class="visually-hidden">Offers:</h4>
               <ul class="event__selected-offers">
-                  ${Array.from(offer)
+                  ${Array.from(offers)
                     .map(
                       (item) => `<li class="event__offer">
                   <span class="event__offer-title">${item.name}</span>
@@ -50,7 +50,6 @@ export default class DayEvent {
     this._editElement = null;
     this._element = null;
     this._srcs = srcs;
-    console.log(this._event);
   }
 
   getTemplate() {

@@ -16,7 +16,7 @@ const createCityTemplate = (city) => {
   return `<option value="${city}"></option>`;
 };
 
-const createEventEditTemplate = ({startDate, endDate}, transports, services, cities, offers, srcs) => {
+const createEventEditTemplate = ({startDate, endDate, offers, price}, transports, services, cities, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -80,7 +80,7 @@ const createEventEditTemplate = ({startDate, endDate}, transports, services, cit
                       <span class="visually-hidden">Price</span>
                       &euro;
                   </label>
-                  <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="">
+                  <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${price}">
               </div>
 
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
