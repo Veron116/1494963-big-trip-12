@@ -1,12 +1,12 @@
-import {createElement, replaceNewToOld, onEscKeyDown} from '../utils';
+import {createElement} from '../utils';
 import TripDayItemView from './trip-day-item';
 
 /**
  *
- * @todo переделать даты вместо slice на встроенные методы даты
+ * TODO переделать даты вместо slice на встроенные методы даты
  */
 
-const createDayList = (dateList, events, transports, services, cities, offers, srcs) => {
+const createDayList = () => {
   return `<ul class="trip-days"></ul>`;
 };
 
@@ -42,15 +42,15 @@ export default class DayList {
         return eventDate === date;
       });
       return new TripDayItemView(
-        index,
-        date,
-        dayEvents,
-        this._events,
-        this._transports,
-        this._services,
-        this._cities,
-        this._offers,
-        this._srcs
+          index,
+          date,
+          dayEvents,
+          this._events,
+          this._transports,
+          this._services,
+          this._cities,
+          this._offers,
+          this._srcs
       ).getElement();
     });
   }

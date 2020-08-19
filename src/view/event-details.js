@@ -14,11 +14,11 @@ const createEventDetails = ({offers}, srcs) => {
 
             <div class="event__available-offers">
             ${OFFERS.map(
-              (OFFER) => `
+      (OFFER) => `
                       <div class="event__offer-selector">
                       <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-${
-                        OFFER.name
-                      }" ${Array.from(offers).filter((offer) => offer.type === OFFER.type).length > 0 ? `checked` : ``}>
+  OFFER.name
+}" ${Array.from(offers).filter((offer) => offer.type === OFFER.type).length > 0 ? `checked` : ``}>
                         <label class="event__offer-label" for="event-offer-${OFFER.type}-1">
                           <span class="event__offer-title">${OFFER.name}</span>
                             &plus;
@@ -26,7 +26,7 @@ const createEventDetails = ({offers}, srcs) => {
                         </label>
                       </div>
                       `
-            ).join(``)}
+  ).join(``)}
             </div>
           </section>
 

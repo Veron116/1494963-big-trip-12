@@ -1,10 +1,10 @@
 import {createElement, replaceNewToOld} from '../utils';
 import EventEditView from './event-edit';
 import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES} from '../const';
-//импортнуть константы для формы
-/**
+// импортнуть константы для формы
+/*
  *
- * @todo - переделать даты вместо slice на встроенные методы даты
+ * TODO переделать даты вместо slice на встроенные методы даты
  * - переделать логику с офферами и прайсом
  */
 const createDayEvent = ({checkinType, city, startDate, endDate, hours, minutes, offers, price}) => {
@@ -33,14 +33,14 @@ const createDayEvent = ({checkinType, city, startDate, endDate, hours, minutes, 
               <ul class="event__selected-offers">
                   ${Array.from(offers)
                     .map(
-                      (item) => `<li class="event__offer">
+                        (item) => `<li class="event__offer">
                   <span class="event__offer-title">${item.name}</span>
                   &plus;
                   &euro;&nbsp;<span class="event__offer-price">${item.price}</span>
               </li>`
                     )
                     .join(
-                      ``
+                        ``
                     )}</ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
@@ -67,7 +67,7 @@ export default class DayEvent {
   }
 
   _eventListeners(container, card, form) {
-    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, (e) => {
+    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
       replaceNewToOld(container, form, card);
       document.addEventListener(`keydown`, onEscKeyDown);
     });
@@ -75,13 +75,13 @@ export default class DayEvent {
     this._editElement.addEventListener(`submit`, (e) => {
       e.preventDefault();
       replaceNewToOld(container, card, form);
-      document.addEventListener(`keydown`, onEscKeyDown);
+      document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     this._editElement.querySelector(`.event__reset-btn`).addEventListener(`click`, (e) => {
       e.preventDefault();
       replaceNewToOld(container, card, form);
-      document.addEventListener(`keydown`, onEscKeyDown);
+      document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     const onEscKeyDown = (e) => {

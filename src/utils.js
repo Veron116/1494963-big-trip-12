@@ -1,6 +1,6 @@
 import {MS_IN_A_DAY} from './const';
 
-export const renderPosition = {
+export const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`,
 };
@@ -11,10 +11,10 @@ export const renderTemplate = (container, template, place) => {
 
 export const render = (container, element, place) => {
   switch (place) {
-    case renderPosition.AFTERBEGIN:
+    case RenderPosition.AFTERBEGIN:
       container.prepend(element);
       break;
-    case renderPosition.BEFOREEND:
+    case RenderPosition.BEFOREEND:
       container.append(element);
       break;
   }

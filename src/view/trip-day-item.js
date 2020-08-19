@@ -3,10 +3,10 @@ import {createElement} from '../utils';
 
 /**
  *
- * @todo переделать даты вместо slice на встроенные методы даты
+ * TODO переделать даты вместо slice на встроенные методы даты
  */
 
-const createTripDayItem = (index, date, dayEvents, events, transports, services, cities, offers, srcs) => {
+const createTripDayItem = (index, date) => {
   return `<li class="trip-days__item  day">
                 <div class="day__info">
                 <span class="day__counter">${index + 1}</span>
@@ -34,15 +34,15 @@ export default class TripDayItem {
 
   getTemplate() {
     return createTripDayItem(
-      this._index,
-      this._date,
-      this._dayEvents,
-      this._events,
-      this._transports,
-      this._services,
-      this._cities,
-      this._offers,
-      this._srcs
+        this._index,
+        this._date,
+        this._dayEvents,
+        this._events,
+        this._transports,
+        this._services,
+        this._cities,
+        this._offers,
+        this._srcs
     );
   }
 
@@ -58,7 +58,7 @@ export default class TripDayItem {
   }
 
   _createDayEvents() {
-    return this._dayEvents.map((event, curIndex) => {
+    return this._dayEvents.map((event) => {
       return new DayEventView(event, this._srcs).getElement();
     });
   }
