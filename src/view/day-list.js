@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 import TripDayItemView from './trip-day-item';
 
 /**
@@ -10,9 +10,9 @@ const createDayList = () => {
   return `<ul class="trip-days"></ul>`;
 };
 
-export default class DayList {
+export default class DayList extends AbstractView {
   constructor(dateList, events, transports, services, cities, offers, srcs) {
-    this._element = null;
+    super();
     this._dateList = dateList;
     this._events = events;
     this._transports = transports;
@@ -22,17 +22,14 @@ export default class DayList {
     this._srcs = srcs;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createDayList(this._dateList, this._events, this._transports, this._services, this._cities, this._offers, this._srcs);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
+  _addChildComponents() {
 
     this._createDayItem().forEach((item) => this._element.appendChild(item));
-    return this._element;
+
   }
 
   _createDayItem() {
@@ -42,20 +39,16 @@ export default class DayList {
         return eventDate === date;
       });
       return new TripDayItemView(
-          index,
-          date,
-          dayEvents,
-          this._events,
-          this._transports,
-          this._services,
-          this._cities,
-          this._offers,
-          this._srcs
+        index,
+        date,
+        dayEvents,
+        this._events,
+        this._transports,
+        this._services,
+        this._cities,
+        this._offers,
+        this._srcs
       ).getElement();
     });
-  }
-
-  removeElement() {
-    return (this._element = null);
   }
 }

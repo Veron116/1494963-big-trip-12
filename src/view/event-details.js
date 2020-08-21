@@ -1,11 +1,18 @@
-import {generateDestinationInfo, createElement} from '../utils';
-import {OFFERS} from '../const';
+import {
+  generateDestinationInfo
+} from '../utils';
+import AbstractView from './abstract';
+import {
+  OFFERS
+} from '../const';
 
 const createPhotoTemplate = (src) => {
   return `<img class="event__photo" src=${src} alt="Event photo">`;
 };
 
-const createEventDetails = ({offers}, srcs) => {
+const createEventDetails = ({
+  offers
+}, srcs) => {
   const photoTemplate = srcs.map((src) => createPhotoTemplate(src));
 
   return `<section class="event__details">
@@ -43,26 +50,14 @@ const createEventDetails = ({offers}, srcs) => {
         </section>`;
 };
 
-export default class EventDetails {
+export default class EventDetails extends AbstractView {
   constructor(event, srcs) {
-    this._element = null;
+    super();
     this._event = event;
     this._srcs = srcs;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createEventDetails(this._event, this._srcs);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    return (this._element = null);
   }
 }

@@ -1,5 +1,5 @@
 import DayEventView from './day-event';
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 /**
  *
@@ -18,9 +18,9 @@ const createTripDayItem = (index, date) => {
               </li>`;
 };
 
-export default class TripDayItem {
+export default class TripDayItem extends AbstractView {
   constructor(index, date, dayEvents, events, transports, services, cities, offers, srcs) {
-    this._element = null;
+    super();
     this._index = index;
     this._date = date;
     this._dayEvents = dayEvents;
@@ -32,29 +32,25 @@ export default class TripDayItem {
     this._srcs = srcs;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createTripDayItem(
-        this._index,
-        this._date,
-        this._dayEvents,
-        this._events,
-        this._transports,
-        this._services,
-        this._cities,
-        this._offers,
-        this._srcs
+      this._index,
+      this._date,
+      this._dayEvents,
+      this._events,
+      this._transports,
+      this._services,
+      this._cities,
+      this._offers,
+      this._srcs
     );
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
+  _addChildComponents() {
 
     const eventsList = this._element.querySelector(`.trip-events__list`);
     this._createDayEvents().forEach((dayEvent) => eventsList.appendChild(dayEvent));
 
-    return this._element;
   }
 
   _createDayEvents() {

@@ -1,6 +1,9 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
-const createFiterTemplate = ({name, isChecked}) => {
+const createFiterTemplate = ({
+  name,
+  isChecked
+}) => {
   return `<div class="trip-filters__filter">
                 <input
                 id="filter-${name.toLowerCase()}"
@@ -20,25 +23,13 @@ const createTabsFilters = (filterTypes) => {
         </form>`;
 };
 
-export default class TabsFilters {
+export default class TabsFilters extends AbstractView {
   constructor(filterTypes) {
-    this._element = null;
+    super();
     this._filterTypes = filterTypes;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createTabsFilters(this._filterTypes);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

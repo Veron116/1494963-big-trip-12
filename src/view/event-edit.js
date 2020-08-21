@@ -1,5 +1,5 @@
 import EventDetails from './event-details';
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 /**
  *
@@ -16,7 +16,11 @@ const createCityTemplate = (city) => {
   return `<option value="${city}"></option>`;
 };
 
-const createEventEditTemplate = ({startDate, endDate, price}, transports, services, cities) => {
+const createEventEditTemplate = ({
+  startDate,
+  endDate,
+  price
+}, transports, services, cities) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
@@ -90,9 +94,9 @@ const createEventEditTemplate = ({startDate, endDate, price}, transports, servic
           </form>`;
 };
 
-export default class EventEdit {
+export default class EventEdit extends AbstractView {
   constructor(event, transports, services, cities, srcs) {
-    this._element = null;
+    super();
     this._event = event;
     this._transports = transports;
     this._services = services;
@@ -100,21 +104,11 @@ export default class EventEdit {
     this._srcs = srcs;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._srcs);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    const detailsContainer = this._element;
-    detailsContainer.appendChild(new EventDetails(this._event, this._srcs).getElement());
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  _addChildComponents() {
+    this._element.appendChild(new EventDetails(this._event, this._srcs).getElement());
   }
 }
