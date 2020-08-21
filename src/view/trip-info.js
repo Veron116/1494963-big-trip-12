@@ -21,7 +21,7 @@ const createTripInfoTemplate = () => {
 
 export default class TripInfo extends AbstractView {
 
-  getTemplate() {
+  _getTemplate() {
     return createTripInfoTemplate();
   }
 }

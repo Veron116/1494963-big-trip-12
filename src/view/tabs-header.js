@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 const createTabHeaderTemplate = (tab) => {
   return `<a class="trip-tabs__btn ${tab.isActive ? `trip-tabs__btn--active` : ``}" href="#">${tab.name}</a>`;
@@ -12,25 +12,13 @@ const createTabsHeader = (tabs) => {
           </nav>`;
 };
 
-export default class TabsHeader {
+export default class TabsHeader extends AbstractView {
   constructor(tabs) {
-    this._element = null;
+    super();
     this._tabs = tabs;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createTabsHeader(this._tabs);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

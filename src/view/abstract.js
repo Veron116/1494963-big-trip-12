@@ -11,16 +11,24 @@ export default class Abstract {
     this._element = null;
   }
 
-  getTemplate() {
+  _getTemplate() {
     throw new Error(`Abstract method not implemented: getTemplate`);
   }
 
   getElement() {
     if (!this._element) {
-      this._element = createElement(this.getTemplate);
+      this._element = createElement(this._getTemplate());
     }
 
+    // if (!this._addChildComponents()) {
+    this._addChildComponents();
+    // }
+
     return this._element;
+  }
+
+  _addChildComponents() {
+    // return false;
   }
 
   removeElement() {

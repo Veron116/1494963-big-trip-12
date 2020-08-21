@@ -1,13 +1,29 @@
-import {createElement, replaceNewToOld} from '../utils';
+import {
+  replaceNewToOld
+} from '../utils';
+import AbstractView from './abstract';
 import EventEditView from './event-edit';
-import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES} from '../const';
+import {
+  TRANSPORT_TYPE,
+  SERVICE_TYPE,
+  CITIES
+} from '../const';
 // импортнуть константы для формы
 /*
  *
  * TODO переделать даты вместо slice на встроенные методы даты
  * - переделать логику с офферами и прайсом
  */
-const createDayEvent = ({checkinType, city, startDate, endDate, hours, minutes, offers, price}) => {
+const createDayEvent = ({
+  checkinType,
+  city,
+  startDate,
+  endDate,
+  hours,
+  minutes,
+  offers,
+  price
+}) => {
   return `<li class="trip-days__item  day">
             <div class="event">
               <div class="event__type">
@@ -44,26 +60,23 @@ const createDayEvent = ({checkinType, city, startDate, endDate, hours, minutes, 
                     )}</ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
-export default class DayEvent {
+export default class DayEvent extends AbstractView {
   constructor(event, srcs) {
+    super();
     this._event = event;
     this._editElement = null;
-    this._element = null;
     this._srcs = srcs;
   }
 
-  getTemplate() {
+  _getTemplate() {
+    this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs).getElement();
+
     return createDayEvent(this._event);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-      this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs).getElement();
-    }
+  _addChildComponents() {
 
     this._eventListeners(this._element, this._element.querySelector(`.event`), this._editElement);
-    return this._element;
   }
 
   _eventListeners(container, card, form) {
@@ -91,9 +104,5 @@ export default class DayEvent {
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
-  }
-
-  removeElement() {
-    return (this._element = null);
   }
 }
