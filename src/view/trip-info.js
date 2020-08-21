@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 /** TODO добавить:
  * - подмену локации
  * - даты начала и конца
@@ -19,24 +19,9 @@ const createTripInfoTemplate = () => {
           </section>`;
 };
 
-export default class TripInfo {
-  constructor() {
-    this._element = null;
-  }
+export default class TripInfo extends AbstractView {
 
   getTemplate() {
     return createTripInfoTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
