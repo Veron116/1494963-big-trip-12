@@ -9,6 +9,7 @@ export default class Abstract {
     }
 
     this._element = null;
+    this._callback = {};
   }
 
   _getTemplate() {
@@ -20,16 +21,12 @@ export default class Abstract {
       this._element = createElement(this._getTemplate());
     }
 
-    // if (!this._addChildComponents()) {
     this._addChildComponents();
-    // }
 
     return this._element;
   }
 
-  _addChildComponents() {
-    // return false;
-  }
+  _addChildComponents() {}
 
   removeElement() {
     this._element = null;
