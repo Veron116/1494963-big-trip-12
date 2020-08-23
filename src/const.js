@@ -1,8 +1,7 @@
 export const TRANSPORT_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`];
 export const SERVICE_TYPE = [`Check-in`, `Sightseeing`, `Restaurant`];
 export const CITIES = [`Amsterdam`, `Geneva`, `Chamonix`, `Saint Petersburg`, `Ganalulu`, `Karaganda`, `Zudilovo`];
-export const OFFERS = [
-  {
+export const OFFERS = [{
     type: `luggage`,
     name: `Add luggage`,
     price: 30,
@@ -28,5 +27,6 @@ export const OFFERS = [
     price: 40,
   },
 ];
+export const EVENT_COUNT = 15;
 export const TRIP_DAYS_COUNT = 10;
 export const MS_IN_A_DAY = 1000 * 60 * 60 * 24;

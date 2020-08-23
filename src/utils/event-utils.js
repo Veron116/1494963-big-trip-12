@@ -2,8 +2,12 @@ import {
   getRandomInteger
 } from './common.js';
 import {
-  MS_IN_A_DAY
+  MS_IN_A_DAY,
+  EVENT_COUNT
 } from '../const';
+import {
+  generateEvent
+} from '../mock/event';
 
 export const isChecked = () => {
   return Boolean(getRandomInteger(0, 1));
@@ -73,3 +77,12 @@ export const getRandomArray = (array) => {
 
   return randomArray;
 };
+
+export const eventsArray = new Array(EVENT_COUNT)
+  .fill()
+  .map(generateEvent)
+  .sort((a, b) => a.startDate - b.endDate);
+export const getDatesStart = () => {
+  return eventsArray.map((event) => new Date(event.startDate));
+};
+export const tripDaysDates = new Set(getDatesStart().map((date) => `${date}`.slice(4, 10)));
