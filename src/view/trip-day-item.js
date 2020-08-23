@@ -58,8 +58,4 @@ export default class TripDayItem extends AbstractView {
       return new DayEventView(event, this._srcs).getElement();
     });
   }
-
-  removeElement() {
-    this._element = null;
-  }
 }

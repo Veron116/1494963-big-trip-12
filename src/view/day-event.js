@@ -1,6 +1,6 @@
 import {
-  replaceNewToOld
-} from '../utils';
+  replace
+} from '../utils/render';
 import AbstractView from './abstract';
 import EventEditView from './event-edit';
 import {
@@ -75,29 +75,29 @@ export default class DayEvent extends AbstractView {
   }
 
   _addChildComponents() {
-    this._eventListeners(this._element, this._element.querySelector(`.event`), this._editComponent.getElement());
+    this._eventListeners(this._element.querySelector(`.event`), this._editComponent.getElement());
   }
 
-  _eventListeners(container, card, form) {
+  _eventListeners(card, form) {
     this._setClickHandler(() => {
-      replaceNewToOld(container, form, card);
+      replace(form, card);
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
     this._editComponent.setEditSubmitHandler(() => {
-      replaceNewToOld(container, card, form);
+      replace(card, form);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     this._editComponent.setResetClickHandler(() => {
-      replaceNewToOld(container, card, form);
+      replace(card, form);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     const onEscKeyDown = (e) => {
       if (e.key === `Escape` || e.key === `Esc`) {
         e.preventDefault();
-        replaceNewToOld(container, card, form);
+        replace(card, form);
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };

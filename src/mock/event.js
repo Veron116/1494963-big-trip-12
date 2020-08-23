@@ -1,5 +1,20 @@
-import {getRandomInteger, getRandomItem, generateDestinationInfo, generatePhotoSrcs, generateRandomDate, getRandomArray} from '../utils';
-import {TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, TRIP_DAYS_COUNT} from '../const';
+import {
+  getRandomInteger
+} from '../utils/common';
+import {
+  getRandomItem,
+  generateDestinationInfo,
+  generatePhotoSrcs,
+  generateRandomDate,
+  getRandomArray
+} from '../utils/event-utils';
+import {
+  TRANSPORT_TYPE,
+  SERVICE_TYPE,
+  CITIES,
+  OFFERS,
+  TRIP_DAYS_COUNT
+} from '../const';
 
 const generateCheckinType = () => {
   let checkinTypes = TRANSPORT_TYPE.concat(SERVICE_TYPE);

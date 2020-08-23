@@ -1,38 +1,9 @@
-import {MS_IN_A_DAY} from './const';
-
-export const RenderPosition = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`,
-};
-
-export const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
-
-export const render = (container, element, place) => {
-  switch (place) {
-    case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
-      break;
-    case RenderPosition.BEFOREEND:
-      container.append(element);
-      break;
-  }
-};
-
-export const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
-};
-
-export const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+import {
+  getRandomInteger
+} from './common.js';
+import {
+  MS_IN_A_DAY
+} from '../const';
 
 export const isChecked = () => {
   return Boolean(getRandomInteger(0, 1));
@@ -101,8 +72,4 @@ export const getRandomArray = (array) => {
   const randomArray = array.slice(0, getRandomInteger(1, array.length - 1));
 
   return randomArray;
-};
-
-export const replaceNewToOld = (container, newElement, oldElement) => {
-  return container.replaceChild(newElement, oldElement);
 };
