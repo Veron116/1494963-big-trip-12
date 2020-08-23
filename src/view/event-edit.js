@@ -1,5 +1,10 @@
-import EventDetails from './event-details';
 import AbstractView from './abstract';
+import {
+  OFFERS
+} from '../const';
+import {
+  generateDestinationInfo
+} from '../utils/event-utils';
 
 /**
  *
@@ -16,14 +21,20 @@ const createCityTemplate = (city) => {
   return `<option value="${city}"></option>`;
 };
 
+const createPhotoTemplate = (src) => {
+  return `<img class="event__photo" src=${src} alt="Event photo">`;
+};
+
 const createEventEditTemplate = ({
   startDate,
   endDate,
-  price
-}, transports, services, cities) => {
+  price,
+  offers
+}, transports, services, cities, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
   const cityTemplate = cities.map((city) => createCityTemplate(city)).join(``);
+  const photoTemplate = srcs.map((src) => createPhotoTemplate(src));
 
   return `<form class="trip-events__item  event  event--edit" action="#" method="post">
           <header class="event__header">
@@ -91,6 +102,41 @@ const createEventEditTemplate = ({
               <button class="event__reset-btn" type="reset">Cancel</button>
           </header>
 
+          <section class="event__details">
+          <section class="event__section  event__section--offers">
+            <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+
+            <div class="event__available-offers">
+            ${OFFERS.map(
+      (OFFER) => `
+                      <div class="event__offer-selector">
+                      <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-${
+  OFFER.name
+}" ${Array.from(offers).filter((offer) => offer.type === OFFER.type).length > 0 ? `checked` : ``}>
+                        <label class="event__offer-label" for="event-offer-${OFFER.type}-1">
+                          <span class="event__offer-title">${OFFER.name}</span>
+                            &plus;
+                            &euro;&nbsp;<span class="event__offer-price">${OFFER.price}</span>
+                        </label>
+                      </div>
+                      `
+  ).join(``)}
+            </div>
+          </section>
+
+          <section class="event__section  event__section--destination">
+            <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+            <p class="event__destination-description">${generateDestinationInfo()}</p>
+
+            <div class="event__photos-container">
+              <div class="event__photos-tape">
+                ${photoTemplate}
+              </div>
+            </div>
+          </section>
+        </section>
+
+
           </form>`;
 };
 
@@ -110,13 +156,9 @@ export default class EventEdit extends AbstractView {
     return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._srcs);
   }
 
-  _addChildComponents() {
-    this._element.appendChild(new EventDetails(this._event, this._srcs).getElement());
-  }
-
   _eventSubmitHandler(evt) {
     evt.preventDefault();
-    this._callback = eventSubmit();
+    this._callback.eventSubmit();
   }
 
   setEditSubmitHandler(callback) {
