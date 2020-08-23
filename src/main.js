@@ -1,5 +1,5 @@
 import HeaderPresenterView from './presenter/header-presenter';
-import EventsPresenter from './presenter/events-presenter'
+import EventsPresenter from './presenter/events-presenter';
 
 
 const bodyElement = document.querySelector(`.page-body`);

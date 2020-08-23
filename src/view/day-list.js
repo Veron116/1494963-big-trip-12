@@ -39,15 +39,15 @@ export default class DayList extends AbstractView {
         return eventDate === date;
       });
       return new TripDayItemView(
-        index,
-        date,
-        dayEvents,
-        this._events,
-        this._transports,
-        this._services,
-        this._cities,
-        this._offers,
-        this._srcs
+          index,
+          date,
+          dayEvents,
+          this._events,
+          this._transports,
+          this._services,
+          this._cities,
+          this._offers,
+          this._srcs
       ).getElement();
     });
   }

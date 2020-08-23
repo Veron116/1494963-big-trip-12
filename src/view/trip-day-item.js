@@ -34,15 +34,15 @@ export default class TripDayItem extends AbstractView {
 
   _getTemplate() {
     return createTripDayItem(
-      this._index,
-      this._date,
-      this._dayEvents,
-      this._events,
-      this._transports,
-      this._services,
-      this._cities,
-      this._offers,
-      this._srcs
+        this._index,
+        this._date,
+        this._dayEvents,
+        this._events,
+        this._transports,
+        this._services,
+        this._cities,
+        this._offers,
+        this._srcs
     );
   }
 
