@@ -64,35 +64,32 @@ export default class DayEvent extends AbstractView {
   constructor(event, srcs) {
     super();
     this._event = event;
-    this._editElement = null;
     this._srcs = srcs;
+    this._editComponent = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs);
+    this._eventListeners = this._eventListeners.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
   }
 
   _getTemplate() {
-    this._editElement = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs).getElement();
-
     return createDayEvent(this._event);
   }
 
   _addChildComponents() {
-
-    this._eventListeners(this._element, this._element.querySelector(`.event`), this._editElement);
+    this._eventListeners(this._element, this._element.querySelector(`.event`), this._editComponent.getElement());
   }
 
   _eventListeners(container, card, form) {
-    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+    this._setClickHandler(() => {
       replaceNewToOld(container, form, card);
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
-    this._editElement.addEventListener(`submit`, (e) => {
-      e.preventDefault();
+    this._editComponent.setEditSubmitHandler(() => {
       replaceNewToOld(container, card, form);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
-    this._editElement.querySelector(`.event__reset-btn`).addEventListener(`click`, (e) => {
-      e.preventDefault();
+    this._editComponent.setResetClickHandler(() => {
       replaceNewToOld(container, card, form);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
@@ -104,5 +101,16 @@ export default class DayEvent extends AbstractView {
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
+  }
+
+  _clickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
+  }
+
+  _setClickHandler(callback) {
+    this._callback.click = callback;
+
+    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, this._clickHandler);
   }
 }

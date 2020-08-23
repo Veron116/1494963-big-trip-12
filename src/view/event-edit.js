@@ -102,6 +102,8 @@ export default class EventEdit extends AbstractView {
     this._services = services;
     this._cities = cities;
     this._srcs = srcs;
+    this._eventSubmitHandler = this._eventSubmitHandler.bind(this);
+    this._eventResetClickHandler = this._eventResetClickHandler.bind(this);
   }
 
   _getTemplate() {
@@ -110,5 +112,25 @@ export default class EventEdit extends AbstractView {
 
   _addChildComponents() {
     this._element.appendChild(new EventDetails(this._event, this._srcs).getElement());
+  }
+
+  _eventSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback = eventSubmit();
+  }
+
+  setEditSubmitHandler(callback) {
+    this._callback.eventSubmit = callback;
+    this.getElement().addEventListener(`submit`, this._eventSubmitHandler);
+  }
+
+  _eventResetClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.eventClick();
+  }
+
+  setResetClickHandler(callback) {
+    this._callback.eventClick = callback;
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
   }
 }
