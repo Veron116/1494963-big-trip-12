@@ -1,6 +1,6 @@
-import SortView from '../view/sort';
-import DayListView from '../view/day-list';
-import NoEventsView from '../view/no-events';
+import Sort from '../view/sort';
+import DayList from '../view/day-list';
+import NoEvents from '../view/no-events';
 import {
   render,
   RenderPosition
@@ -22,9 +22,9 @@ import {
 export default class EventsPresenter {
   constructor(bodyContainer) {
     this._bodyContainer = bodyContainer;
-    this._SortComponent = new SortView();
-    this._DayListComponent = new DayListView(tripDaysDates, eventsArray, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs());
-    this._NoEventsComponent = new NoEventsView();
+    this._SortComponent = new Sort();
+    this._DayListComponent = new DayList(tripDaysDates, eventsArray, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, OFFERS, generatePhotoSrcs());
+    this._NoEventsComponent = new NoEvents();
   }
 
   init() {

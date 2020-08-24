@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import Abstract from './abstract';
 import {
   OFFERS
 } from '../const';
@@ -140,7 +140,7 @@ const createEventEditTemplate = ({
           </form>`;
 };
 
-export default class EventEdit extends AbstractView {
+export default class EventEdit extends Abstract {
   constructor(event, transports, services, cities, srcs) {
     super();
     this._event = event;

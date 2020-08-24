@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import Abstract from './abstract';
 
 const createHeaderTemplate = () => {
   return `<header class="page-header">
@@ -19,7 +19,7 @@ const createHeaderTemplate = () => {
     </header>`;
 };
 
-export default class Header extends AbstractView {
+export default class Header extends Abstract {
   _getTemplate() {
     return createHeaderTemplate();
   }

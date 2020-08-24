@@ -1,8 +1,8 @@
 import {
   replace
 } from '../utils/render';
-import AbstractView from './abstract';
-import EventEditView from './event-edit';
+import Abstract from './abstract';
+import EventEdit from './event-edit';
 import {
   TRANSPORT_TYPE,
   SERVICE_TYPE,
@@ -60,12 +60,12 @@ const createDayEvent = ({
                     )}</ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
-export default class DayEvent extends AbstractView {
+export default class DayEvent extends Abstract {
   constructor(event, srcs) {
     super();
     this._event = event;
     this._srcs = srcs;
-    this._editComponent = new EventEditView(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs);
+    this._editComponent = new EventEdit(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs);
     this._eventListeners = this._eventListeners.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
   }

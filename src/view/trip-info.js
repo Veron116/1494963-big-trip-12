@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import Abstract from './abstract';
 /** TODO добавить:
  * - подмену локации
  * - даты начала и конца
@@ -19,7 +19,7 @@ const createTripInfoTemplate = () => {
           </section>`;
 };
 
-export default class TripInfo extends AbstractView {
+export default class TripInfo extends Abstract {
 
   _getTemplate() {
     return createTripInfoTemplate();
