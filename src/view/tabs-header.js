@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import Abstract from './abstract';
 
 const createTabHeaderTemplate = (tab) => {
   return `<a class="trip-tabs__btn ${tab.isActive ? `trip-tabs__btn--active` : ``}" href="#">${tab.name}</a>`;
@@ -12,7 +12,7 @@ const createTabsHeader = (tabs) => {
           </nav>`;
 };
 
-export default class TabsHeader extends AbstractView {
+export default class TabsHeader extends Abstract {
   constructor(tabs) {
     super();
     this._tabs = tabs;

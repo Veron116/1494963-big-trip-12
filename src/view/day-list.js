@@ -1,5 +1,5 @@
-import AbstractView from './abstract';
-import TripDayItemView from './trip-day-item';
+import Abstract from './abstract';
+import TripDayItem from './trip-day-item';
 
 /**
  *
@@ -10,7 +10,7 @@ const createDayList = () => {
   return `<ul class="trip-days"></ul>`;
 };
 
-export default class DayList extends AbstractView {
+export default class DayList extends Abstract {
   constructor(dateList, events, transports, services, cities, offers, srcs) {
     super();
     this._dateList = dateList;
@@ -38,16 +38,16 @@ export default class DayList extends AbstractView {
         const eventDate = `${new Date(event.startDate)}`.slice(4, 10);
         return eventDate === date;
       });
-      return new TripDayItemView(
-          index,
-          date,
-          dayEvents,
-          this._events,
-          this._transports,
-          this._services,
-          this._cities,
-          this._offers,
-          this._srcs
+      return new TripDayItem(
+        index,
+        date,
+        dayEvents,
+        this._events,
+        this._transports,
+        this._services,
+        this._cities,
+        this._offers,
+        this._srcs
       ).getElement();
     });
   }

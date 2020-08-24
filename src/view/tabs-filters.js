@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import Abstract from './abstract';
 
 const createFiterTemplate = ({
   name,
@@ -23,7 +23,7 @@ const createTabsFilters = (filterTypes) => {
         </form>`;
 };
 
-export default class TabsFilters extends AbstractView {
+export default class TabsFilters extends Abstract {
   constructor(filterTypes) {
     super();
     this._filterTypes = filterTypes;
