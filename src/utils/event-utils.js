@@ -86,3 +86,17 @@ export const getDatesStart = () => {
   return eventsArray.map((event) => new Date(event.startDate));
 };
 export const tripDaysDates = new Set(getDatesStart().map((date) => `${date}`.slice(4, 10)));
+
+export const renderEventModel = () => {
+  return Array.from(tripDaysDates).map((date, index) => {
+    const eventModel = {
+      date,
+      index,
+      dayEvents: eventsArray.filter((event) => {
+        const eventDate = `${new Date(event.startDate)}`.slice(4, 10);
+        return eventDate === date;
+      })
+    };
+    return eventModel;
+  });
+};

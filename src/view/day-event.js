@@ -1,13 +1,5 @@
-import {
-  replace
-} from '../utils/render';
 import Abstract from './abstract';
-import EventEdit from './event-edit';
-import {
-  TRANSPORT_TYPE,
-  SERVICE_TYPE,
-  CITIES
-} from '../const';
+
 // импортнуть константы для формы
 /*
  *
@@ -61,12 +53,9 @@ const createDayEvent = ({
 };
 
 export default class DayEvent extends Abstract {
-  constructor(event, srcs) {
+  constructor(event) {
     super();
     this._event = event;
-    this._srcs = srcs;
-    this._editComponent = new EventEdit(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, this._srcs);
-    this._eventListeners = this._eventListeners.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
   }
 
@@ -74,33 +63,8 @@ export default class DayEvent extends Abstract {
     return createDayEvent(this._event);
   }
 
-  _addChildComponents() {
-    this._eventListeners(this._element.querySelector(`.event`), this._editComponent.getElement());
-  }
-
-  _eventListeners(card, form) {
-    this._setClickHandler(() => {
-      replace(form, card);
-      document.addEventListener(`keydown`, onEscKeyDown);
-    });
-
-    this._editComponent.setEditSubmitHandler(() => {
-      replace(card, form);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    });
-
-    this._editComponent.setResetClickHandler(() => {
-      replace(card, form);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    });
-
-    const onEscKeyDown = (e) => {
-      if (e.key === `Escape` || e.key === `Esc`) {
-        e.preventDefault();
-        replace(card, form);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
+  getEventCard() {
+    return this.getElement().querySelector(`.event`);
   }
 
   _clickHandler(evt) {
@@ -108,9 +72,9 @@ export default class DayEvent extends Abstract {
     this._callback.click();
   }
 
-  _setClickHandler(callback) {
+  setClickHandler(callback) {
     this._callback.click = callback;
 
-    this._element.querySelector(`.event__rollup-btn`).addEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._clickHandler);
   }
 }

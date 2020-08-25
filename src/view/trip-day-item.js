@@ -1,4 +1,4 @@
-import DayEvent from './day-event';
+// import DayEvent from './day-event';
 import Abstract from './abstract';
 
 /**
@@ -19,43 +19,21 @@ const createTripDayItem = (index, date) => {
 };
 
 export default class TripDayItem extends Abstract {
-  constructor(index, date, dayEvents, events, transports, services, cities, offers, srcs) {
+
+  constructor(index, date) {
     super();
     this._index = index;
     this._date = date;
-    this._dayEvents = dayEvents;
-    this._events = events;
-    this._transports = transports;
-    this._services = services;
-    this._cities = cities;
-    this._offers = offers;
-    this._srcs = srcs;
   }
 
   _getTemplate() {
     return createTripDayItem(
-      this._index,
-      this._date,
-      this._dayEvents,
-      this._events,
-      this._transports,
-      this._services,
-      this._cities,
-      this._offers,
-      this._srcs
+        this._index,
+        this._date
     );
   }
 
-  _addChildComponents() {
-
-    const eventsList = this._element.querySelector(`.trip-events__list`);
-    this._createDayEvents().forEach((dayEvent) => eventsList.appendChild(dayEvent));
-
-  }
-
-  _createDayEvents() {
-    return this._dayEvents.map((event) => {
-      return new DayEvent(event, this._srcs).getElement();
-    });
+  getDayEventContainer() {
+    return this.getElement().querySelector(`.trip-events__list`);
   }
 }
