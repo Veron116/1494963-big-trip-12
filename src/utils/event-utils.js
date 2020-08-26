@@ -100,3 +100,15 @@ export const renderEventModel = () => {
     return eventModel;
   });
 };
+
+export const sortTime = (event1, event2) => {
+  return event1.startDate > event2.startDate ? 1 : -1;
+};
+
+export const sortPrice = (event1, event2) => {
+  return event1.price > event2.price ? 1 : -1;
+};
+
+export const sortEvents = (event1, event2) => {
+  return event1.length > event2.length ? 1 : -1;
+};

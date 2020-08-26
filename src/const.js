@@ -30,3 +30,9 @@ export const OFFERS = [{
 export const EVENT_COUNT = 15;
 export const TRIP_DAYS_COUNT = 10;
 export const MS_IN_A_DAY = 1000 * 60 * 60 * 24;
+export const SortType = {
+  EVENT: `event`,
+  TIME: `time`,
+  PRICE: `price`,
+  NO_SORT: `default`
+};
