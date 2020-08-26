@@ -16,6 +16,7 @@ const createDayEvent = ({
   offers,
   price
 }) => {
+  // console.log(endDate - startDate);
   return `<li class="trip-days__item  day">
             <div class="event">
               <div class="event__type">
