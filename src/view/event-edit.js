@@ -22,7 +22,7 @@ const createCityTemplate = (city) => {
 };
 
 const createPhotoTemplate = (src) => {
-  return `<img class="event__photo" src=${src} alt="Event photo">`;
+  return `<img class="event__photo" src="${src}" alt="Event photo">`;
 };
 
 const createEventEditTemplate = ({

@@ -44,4 +44,7 @@ export default class Sort extends Abstract {
   _getTemplate() {
     return createSortTemplate();
   }
+  getSortContainer() {
+    return this.getElement().querySelector(`.page-body__container`);
+  }
 }

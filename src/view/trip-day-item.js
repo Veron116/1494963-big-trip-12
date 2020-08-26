@@ -1,4 +1,3 @@
-// import DayEvent from './day-event';
 import Abstract from './abstract';
 
 /**
@@ -6,7 +5,7 @@ import Abstract from './abstract';
  * TODO переделать даты вместо slice на встроенные методы даты
  */
 
-const createTripDayItem = (index, date) => {
+const createTripDayItem = (date, index) => {
   return `<li class="trip-days__item  day">
                 <div class="day__info">
                 <span class="day__counter">${index + 1}</span>
@@ -20,16 +19,17 @@ const createTripDayItem = (index, date) => {
 
 export default class TripDayItem extends Abstract {
 
-  constructor(index, date) {
+  constructor(date, index) {
     super();
+
     this._index = index;
     this._date = date;
   }
 
   _getTemplate() {
     return createTripDayItem(
-        this._index,
-        this._date
+        this._date,
+        this._index
     );
   }
 
