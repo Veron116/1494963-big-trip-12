@@ -1,4 +1,7 @@
 import {
+  v4 as uuidv4
+} from 'uuid';
+import {
   getRandomInteger
 } from '../utils/common';
 import {
@@ -30,6 +33,7 @@ export const generateEvent = () => {
   const minutes = Math.trunc((msIndInHours - hours) * 60);
 
   return {
+    id: uuidv4(),
     startDate,
     endDate,
     hours,

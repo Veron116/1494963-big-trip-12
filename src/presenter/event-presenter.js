@@ -16,6 +16,8 @@ import {
   generatePhotoSrcs,
 } from "../utils/event-utils";
 
+const photoSrcs = generatePhotoSrcs();
+
 export default class EventPresenter {
   constructor(event, eventContainer) {
     this._event = event;
@@ -30,7 +32,7 @@ export default class EventPresenter {
     const prevEventEditComponent = this._eventEditComponent;
 
     this._eventComponent = new DayEvent(this._event);
-    this._eventEditComponent = new EventEdit(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, generatePhotoSrcs());
+    this._eventEditComponent = new EventEdit(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, photoSrcs);
 
     if (prevEventComponent === null || prevEventEditComponent === null) {
       render(this._eventContainer, this._eventComponent, RenderPosition.AFTERBEGIN);
@@ -53,8 +55,8 @@ export default class EventPresenter {
   }
 
   destroy() {
-    remove(this._taskComponent);
-    remove(this._taskEditComponent);
+    remove(this._eventComponent);
+    remove(this._eventEditComponent);
   }
 
   _eventListeners(card, form) {
@@ -80,10 +82,5 @@ export default class EventPresenter {
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
-  }
-
-  _clearEventList() {
-    remove(this._dayListComponent);
-    this._getTripDayItems();
   }
 }
