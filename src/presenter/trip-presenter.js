@@ -6,6 +6,9 @@ import TripDayItem from "../view/trip-day-item";
 import EventPresenter from './event-presenter';
 
 import {
+  updateItem
+} from '../utils/common';
+import {
   remove,
   render,
   RenderPosition
@@ -32,6 +35,7 @@ export default class TripPresenter {
     this._unicEventsPresenters = {};
 
     this._handleSortChange = this._handleSortChange.bind(this);
+    this._handleEventChange = this._handleEventChange.bind(this);
 
     this._eventModel = renderEventModel();
     this._initialEvents = this._eventModel.slice();
@@ -40,16 +44,15 @@ export default class TripPresenter {
   init() {
     this._renderSort();
     this._renderEvents();
+    // console.log(this._unicEventsPresenters);
   }
 
   _sortEvents(sortType) {
     this._currentSortType = sortType;
 
     if (sortType === SortType.NO_SORT) {
-      // console.log(`no sort`);
 
       this._eventModel = this._initialEvents;
-      // console.log(this._eventModel);
       return;
     }
 
@@ -69,7 +72,6 @@ export default class TripPresenter {
   }
 
   _handleSortChange(sortType) {
-    // console.log(`click sort`, sortType);
     if (this._currentSortType === sortType) {
       sortType = SortType.NO_SORT;
       return;
@@ -113,6 +115,16 @@ export default class TripPresenter {
     });
   }
 
+  _handleEventChange(updatedEvent) {
+    this._eventModel = updateItem(this._eventModel, updatedEvent);
+    this._initialEvents = updateItem(this._initialEvents, updatedEvent);
+    for (const [key, value] of Object.entries(this._unicEventsPresenters)) {
+      if (updatedEvent.id === key) {
+        this._unicEventsPresenters[value].init();
+        return;
+      }
+    }
+  }
 
   _clearEventList() {
     remove(this._dayListComponent);
