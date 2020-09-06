@@ -37,21 +37,20 @@ export default class TripPresenter {
     this._handleSortChange = this._handleSortChange.bind(this);
     this._handleEventChange = this._handleEventChange.bind(this);
 
-    this._eventModel = renderEventModel();
-    this._initialEvents = this._eventModel.slice();
+    this._eventModel = renderEventModel(eventsArray);
+    // this._initialEvents = eventsArray; не понятно зачем если в хэндлере они не нужны
+    this._initialEvents = renderEventModel(eventsArray);
   }
 
   init() {
     this._renderSort();
     this._renderEvents();
-    // console.log(this._unicEventsPresenters);
   }
 
   _sortEvents(sortType) {
     this._currentSortType = sortType;
 
     if (sortType === SortType.NO_SORT) {
-
       this._eventModel = this._initialEvents;
       return;
     }
@@ -105,7 +104,7 @@ export default class TripPresenter {
       const eventContainer = tripDayItem.getDayEventContainer();
 
       model.dayEvents.forEach((event) => {
-        let eventPresenter = new EventPresenter(event, eventContainer);
+        let eventPresenter = new EventPresenter(event, eventContainer, this._handleEventChange);
         this._eventsPresenters.push(eventPresenter);
         this._unicEventsPresenters[event.id] = eventPresenter;
       });
@@ -116,11 +115,15 @@ export default class TripPresenter {
   }
 
   _handleEventChange(updatedEvent) {
-    this._eventModel = updateItem(this._eventModel, updatedEvent);
-    this._initialEvents = updateItem(this._initialEvents, updatedEvent);
-    for (const [key, value] of Object.entries(this._unicEventsPresenters)) {
+    // this._initialEvents = updateItem(this._initialEvents, updatedEvent);
+    this._eventModel.forEach((eventModel) => {
+      updateItem(eventModel.dayEvents, updatedEvent);
+    });
+
+    // console.log(updatedEvent);
+    for (const [key, presenter] of Object.entries(this._unicEventsPresenters)) {
       if (updatedEvent.id === key) {
-        this._unicEventsPresenters[value].init();
+        presenter.init(updatedEvent);
         return;
       }
     }

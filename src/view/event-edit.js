@@ -26,10 +26,12 @@ const createPhotoTemplate = (src) => {
 };
 
 const createEventEditTemplate = ({
+  id,
   startDate,
   endDate,
   price,
-  offers
+  offers,
+  isFavorite
 }, transports, services, cities, srcs) => {
   const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
   const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
@@ -91,15 +93,23 @@ const createEventEditTemplate = ({
               </div>
 
               <div class="event__field-group  event__field-group--price">
-                  <label class="event__label" for="event-price-1">
+                  <label class="event__label" for="event-price-${id}">
                       <span class="visually-hidden">Price</span>
                       &euro;
                   </label>
-                  <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${price}">
+                  <input class="event__input  event__input--price" id="event-price-${id}" type="text" name="event-price" value="${price}">
               </div>
 
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
               <button class="event__reset-btn" type="reset">Cancel</button>
+
+              <input id="event-favorite-${id}" class="event__favorite-checkbox  visually-hidden" type="checkbox" name="event-favorite" ${isFavorite ? `checked` : ``}>
+                <label class="event__favorite-btn" for="event-favorite-${id}">
+                  <span class="visually-hidden">Add to favorite</span>
+                  <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
+                    <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
+                  </svg>
+                </label>
           </header>
 
           <section class="event__details">
@@ -135,30 +145,81 @@ const createEventEditTemplate = ({
             </div>
           </section>
         </section>
-
-
-          </form>`;
+      </form>`;
 };
 
 export default class EventEdit extends Abstract {
-  constructor(event, transports, services, cities, srcs) {
+  constructor(event, transports, services, cities, srcs, changeData) {
     super();
-    this._event = event;
+
+    this._data = EventEdit.parseEventToData(event);
     this._transports = transports;
     this._services = services;
     this._cities = cities;
     this._srcs = srcs;
+    this._changeData = changeData;
+
     this._eventSubmitHandler = this._eventSubmitHandler.bind(this);
     this._eventResetClickHandler = this._eventResetClickHandler.bind(this);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
+    this._priceInputHandler = this._priceInputHandler.bind(this);
+
+    this._setInnerHandlers();
+    // console.log(this._callback);
+    // this.setEditSubmitHandler();
   }
 
   _getTemplate() {
-    return createEventEditTemplate(this._event, this._transports, this._services, this._cities, this._srcs);
+    return createEventEditTemplate(this._data, this._transports, this._services, this._cities, this._srcs);
+  }
+
+  updateData(update, justDataUpdating) {
+    console.log(update);
+    if (!update) {
+      return;
+    }
+
+    this._data = Object.assign({},
+      this._data,
+      update
+    );
+
+
+    if (justDataUpdating) {
+      return;
+    }
+
+    this.updateElement();
+  }
+
+  updateElement() {
+    let prevElement = this.getElement();
+    const parent = prevElement.parentElement;
+    this.removeElement();
+
+    const newElement = this.getElement();
+
+    parent.replaceChild(newElement, prevElement);
+    prevElement = null;
+
+
+    this.restoreHandlers();
+  }
+
+  _setInnerHandlers() {
+    this.getElement().querySelector(`.event__favorite-checkbox`).addEventListener(`change`, this._favoriteClickHandler);
+    this.getElement().querySelector(`.event__input--price`).addEventListener(`change`, this._priceInputHandler);
+  }
+
+  restoreHandlers() {
+    this._setInnerHandlers();
+    this.setEditSubmitHandler(this._callback.eventSubmit);
+
   }
 
   _eventSubmitHandler(evt) {
     evt.preventDefault();
-    this._callback.eventSubmit();
+    this._callback.eventSubmit(EventEdit.parseDataToEvent(this._data));
   }
 
   setEditSubmitHandler(callback) {
@@ -166,13 +227,49 @@ export default class EventEdit extends Abstract {
     this.getElement().addEventListener(`submit`, this._eventSubmitHandler);
   }
 
+  setResetClickHandler(callback) {
+    this._callback.eventClick = callback;
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
+  }
+
   _eventResetClickHandler(evt) {
     evt.preventDefault();
     this._callback.eventClick();
   }
 
-  setResetClickHandler(callback) {
-    this._callback.eventClick = callback;
-    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
+  _favoriteClickHandler(evt) {
+    evt.preventDefault();
+    this.updateData({
+      isFavorite: !this._data.isFavorite
+    });
+  }
+
+  _priceInputHandler(evt) {
+    // console.log(evt.target.value);
+    evt.preventDefault();
+    this.updateData({
+      price: evt.target.value
+    }, true);
+  }
+
+  static parseEventToData(event) {
+    return Object.assign({},
+      event, {
+        isFavorite: event.isFavorite,
+        price: event.price,
+      }
+    );
+  }
+
+  static parseDataToEvent(data) {
+    data = Object.assign({}, data);
+
+    if (!data.isFavorite) {
+      data.isFavorite = false;
+    }
+
+    // delete data.isFavorite;
+
+    return data;
   }
 }

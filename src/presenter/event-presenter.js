@@ -19,14 +19,19 @@ import {
 const photoSrcs = generatePhotoSrcs();
 
 export default class EventPresenter {
-  constructor(event, eventContainer) {
+  constructor(event, eventContainer, changeData) {
     this._event = event;
     this._eventContainer = eventContainer;
+    this._changeData = changeData;
     this._eventComponent = null;
     this._eventEditComponent = null;
   }
 
-  init() {
+  init(event = this._event) {
+    // console.log('event', event);
+    // console.log('this event', this._event);
+
+    this._event = event;
 
     const prevEventComponent = this._eventComponent;
     const prevEventEditComponent = this._eventEditComponent;
@@ -65,8 +70,10 @@ export default class EventPresenter {
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
-    form.setEditSubmitHandler(() => {
+    form.setEditSubmitHandler((event) => {
+      // console.log(event);
       replace(card, form);
+      this._changeData(event);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 

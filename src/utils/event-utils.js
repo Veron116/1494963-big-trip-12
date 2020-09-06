@@ -82,17 +82,17 @@ export const eventsArray = new Array(EVENT_COUNT)
   .fill()
   .map(generateEvent)
   .sort((a, b) => a.startDate - b.endDate);
-export const getDatesStart = () => {
-  return eventsArray.map((event) => new Date(event.startDate));
+export const getDatesStart = (events) => {
+  return events.map((event) => new Date(event.startDate));
 };
-export const tripDaysDates = new Set(getDatesStart().map((date) => `${date}`.slice(4, 10)));
 
-export const renderEventModel = () => {
+export const renderEventModel = (events) => {
+  const tripDaysDates = new Set(getDatesStart(events).map((date) => `${date}`.slice(4, 10)));
   return Array.from(tripDaysDates).map((date, index) => {
     const eventModel = {
       date,
       index,
-      dayEvents: eventsArray.filter((event) => {
+      dayEvents: events.filter((event) => {
         const eventDate = `${new Date(event.startDate)}`.slice(4, 10);
         return eventDate === date;
       })

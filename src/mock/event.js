@@ -44,5 +44,6 @@ export const generateEvent = () => {
     city: getRandomItem(CITIES),
     offers: getRandomArray(OFFERS),
     price: getRandomInteger(10, 900),
+    isFavorite: false,
   };
 };
