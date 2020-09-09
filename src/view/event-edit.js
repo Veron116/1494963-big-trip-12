@@ -1,4 +1,4 @@
-import Abstract from './abstract';
+import Smart from './smart';
 import {
   OFFERS
 } from '../const';
@@ -148,7 +148,7 @@ const createEventEditTemplate = ({
       </form>`;
 };
 
-export default class EventEdit extends Abstract {
+export default class EventEdit extends Smart {
   constructor(event, transports, services, cities, srcs, changeData) {
     super();
 
@@ -164,55 +164,21 @@ export default class EventEdit extends Abstract {
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
     this._priceInputHandler = this._priceInputHandler.bind(this);
 
-    this._setInnerHandlers();
-    // console.log(this._callback);
-    // this.setEditSubmitHandler();
+    this.setInnerHandlers();
   }
 
   _getTemplate() {
     return createEventEditTemplate(this._data, this._transports, this._services, this._cities, this._srcs);
   }
 
-  updateData(update, justDataUpdating) {
-    console.log(update);
-    if (!update) {
-      return;
-    }
-
-    this._data = Object.assign({},
-      this._data,
-      update
-    );
-
-
-    if (justDataUpdating) {
-      return;
-    }
-
-    this.updateElement();
-  }
-
-  updateElement() {
-    let prevElement = this.getElement();
-    const parent = prevElement.parentElement;
-    this.removeElement();
-
-    const newElement = this.getElement();
-
-    parent.replaceChild(newElement, prevElement);
-    prevElement = null;
-
-
-    this.restoreHandlers();
-  }
-
-  _setInnerHandlers() {
+  setInnerHandlers() {
     this.getElement().querySelector(`.event__favorite-checkbox`).addEventListener(`change`, this._favoriteClickHandler);
     this.getElement().querySelector(`.event__input--price`).addEventListener(`change`, this._priceInputHandler);
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
   }
 
   restoreHandlers() {
-    this._setInnerHandlers();
+    this.setInnerHandlers();
     this.setEditSubmitHandler(this._callback.eventSubmit);
 
   }
@@ -237,15 +203,13 @@ export default class EventEdit extends Abstract {
     this._callback.eventClick();
   }
 
-  _favoriteClickHandler(evt) {
-    evt.preventDefault();
+  _favoriteClickHandler() {
     this.updateData({
       isFavorite: !this._data.isFavorite
-    });
+    }, true);
   }
 
   _priceInputHandler(evt) {
-    // console.log(evt.target.value);
     evt.preventDefault();
     this.updateData({
       price: evt.target.value
@@ -268,8 +232,12 @@ export default class EventEdit extends Abstract {
       data.isFavorite = false;
     }
 
-    // delete data.isFavorite;
-
     return data;
+  }
+
+  reset(event) {
+    this.updateData(
+      EventEdit.parseEventToData(event)
+    );
   }
 }

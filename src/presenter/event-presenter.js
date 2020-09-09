@@ -28,9 +28,6 @@ export default class EventPresenter {
   }
 
   init(event = this._event) {
-    // console.log('event', event);
-    // console.log('this event', this._event);
-
     this._event = event;
 
     const prevEventComponent = this._eventComponent;
@@ -71,13 +68,13 @@ export default class EventPresenter {
     });
 
     form.setEditSubmitHandler((event) => {
-      // console.log(event);
       replace(card, form);
       this._changeData(event);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
     form.setResetClickHandler(() => {
+      this._eventEditComponent.reset(this._event);
       replace(card, form);
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
@@ -85,6 +82,7 @@ export default class EventPresenter {
     const onEscKeyDown = (e) => {
       if (e.key === `Escape` || e.key === `Esc`) {
         e.preventDefault();
+        this._eventEditComponent.reset(this._event);
         replace(card, form);
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
