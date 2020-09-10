@@ -172,6 +172,7 @@ export default class EventEdit extends Smart {
   }
 
   setInnerHandlers() {
+    this.getElement().addEventListener(`submit`, this._eventSubmitHandler);
     this.getElement().querySelector(`.event__favorite-checkbox`).addEventListener(`change`, this._favoriteClickHandler);
     this.getElement().querySelector(`.event__input--price`).addEventListener(`change`, this._priceInputHandler);
     this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
@@ -180,7 +181,6 @@ export default class EventEdit extends Smart {
   restoreHandlers() {
     this.setInnerHandlers();
     this.setEditSubmitHandler(this._callback.eventSubmit);
-
   }
 
   _eventSubmitHandler(evt) {
@@ -190,12 +190,10 @@ export default class EventEdit extends Smart {
 
   setEditSubmitHandler(callback) {
     this._callback.eventSubmit = callback;
-    this.getElement().addEventListener(`submit`, this._eventSubmitHandler);
   }
 
   setResetClickHandler(callback) {
     this._callback.eventClick = callback;
-    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._eventResetClickHandler);
   }
 
   _eventResetClickHandler(evt) {

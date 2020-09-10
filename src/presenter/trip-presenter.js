@@ -36,6 +36,7 @@ export default class TripPresenter {
 
     this._handleSortChange = this._handleSortChange.bind(this);
     this._handleEventChange = this._handleEventChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
 
     this._eventModel = renderEventModel(eventsArray);
     // this._initialEvents = eventsArray; не понятно зачем если в хэндлере они не нужны
@@ -104,7 +105,7 @@ export default class TripPresenter {
       const eventContainer = tripDayItem.getDayEventContainer();
 
       model.dayEvents.forEach((event) => {
-        let eventPresenter = new EventPresenter(event, eventContainer, this._handleEventChange);
+        let eventPresenter = new EventPresenter(event, eventContainer, this._handleEventChange, this._handleModeChange);
         this._eventsPresenters.push(eventPresenter);
         this._unicEventsPresenters[event.id] = eventPresenter;
       });
@@ -114,13 +115,18 @@ export default class TripPresenter {
     });
   }
 
+  _handleModeChange() {
+    Object.values(this._unicEventsPresenters).forEach((presenter) => {
+      presenter.resetView();
+    });
+  }
+
   _handleEventChange(updatedEvent) {
     // this._initialEvents = updateItem(this._initialEvents, updatedEvent);
     this._eventModel.forEach((eventModel) => {
       updateItem(eventModel.dayEvents, updatedEvent);
     });
 
-    // console.log(updatedEvent);
     for (const [key, presenter] of Object.entries(this._unicEventsPresenters)) {
       if (updatedEvent.id === key) {
         presenter.init(updatedEvent);

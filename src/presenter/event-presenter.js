@@ -18,13 +18,26 @@ import {
 
 const photoSrcs = generatePhotoSrcs();
 
+const Mode = {
+  DEFAULT: `DEFAULT`,
+  EDITING: `EDITING`
+};
+
 export default class EventPresenter {
-  constructor(event, eventContainer, changeData) {
+  constructor(event, eventContainer, changeData, changeMode) {
     this._event = event;
     this._eventContainer = eventContainer;
     this._changeData = changeData;
+    this._changeMode = changeMode;
+
     this._eventComponent = null;
     this._eventEditComponent = null;
+    this._mode = Mode.DEFAULT;
+
+    this._handleEditClick = this._handleEditClick.bind(this);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
+    this._handleResetForm = this._handleResetForm.bind(this);
   }
 
   init(event = this._event) {
@@ -36,20 +49,21 @@ export default class EventPresenter {
     this._eventComponent = new DayEvent(this._event);
     this._eventEditComponent = new EventEdit(this._event, TRANSPORT_TYPE, SERVICE_TYPE, CITIES, photoSrcs);
 
+    this._eventComponent.setClickHandler(this._handleEditClick);
+    this._eventEditComponent.setEditSubmitHandler(this._handleFormSubmit);
+    this._eventEditComponent.setResetClickHandler(this._handleResetForm);
+
     if (prevEventComponent === null || prevEventEditComponent === null) {
       render(this._eventContainer, this._eventComponent, RenderPosition.AFTERBEGIN);
-      this._eventListeners(this._eventComponent, this._eventEditComponent);
       return;
     }
 
-    if (this._eventContainer.contains(prevEventComponent.getElement())) {
+    if (this._mode === Mode.DEFAULT) {
       replace(this._eventComponent, prevEventComponent);
-      this._eventListeners(this._eventComponent, this._eventEditComponent);
     }
 
-    if (this._eventContainer.contains(prevEventEditComponent.getElement())) {
+    if (this._mode === Mode.EDITING) {
       replace(this._eventEditComponent, prevEventEditComponent);
-      this._eventListeners(this._eventComponent, this._eventEditComponent);
     }
 
     remove(prevEventComponent);
@@ -61,31 +75,44 @@ export default class EventPresenter {
     remove(this._eventEditComponent);
   }
 
-  _eventListeners(card, form) {
-    card.setClickHandler(() => {
-      replace(form, card);
-      document.addEventListener(`keydown`, onEscKeyDown);
-    });
+  resetView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceFormToCard();
+    }
+  }
 
-    form.setEditSubmitHandler((event) => {
-      replace(card, form);
-      this._changeData(event);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    });
+  _replaceCardToForm() {
+    replace(this._eventEditComponent, this._eventComponent);
+    document.addEventListener(`keydown`, this._escKeyDownHandler);
+    this._changeMode();
+    this._mode = Mode.EDITING;
+  }
 
-    form.setResetClickHandler(() => {
+  _replaceFormToCard() {
+    replace(this._eventComponent, this._eventEditComponent);
+    document.removeEventListener(`keydown`, this._escKeyDownHandler);
+    this._mode = Mode.DEFAULT;
+  }
+
+  _escKeyDownHandler(evt) {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      evt.preventDefault();
       this._eventEditComponent.reset(this._event);
-      replace(card, form);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    });
+      this._replaceFormToCard();
+    }
+  }
 
-    const onEscKeyDown = (e) => {
-      if (e.key === `Escape` || e.key === `Esc`) {
-        e.preventDefault();
-        this._eventEditComponent.reset(this._event);
-        replace(card, form);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
+  _handleEditClick() {
+    this._replaceCardToForm();
+  }
+
+  _handleFormSubmit(event) {
+    this._changeData(event);
+    this._replaceFormToCard();
+  }
+
+  _handleResetForm() {
+    this._eventEditComponent.reset(this._event);
+    this._replaceFormToCard();
   }
 }
