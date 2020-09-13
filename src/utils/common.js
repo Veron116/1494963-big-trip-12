@@ -19,3 +19,12 @@ export const updateItem = (items, update) => {
     ...items.slice(index + 1)
   ];
 };
+
+export const addEventTypeLabel = (type, transpors, services) => {
+  if (services.includes(type)) {
+    return `${type} in`;
+  }
+  if (transpors.includes(type)) {
+    return `${type} to`;
+  }
+};

@@ -122,6 +122,7 @@ export default class TripPresenter {
   }
 
   _handleEventChange(updatedEvent) {
+    console.log(updatedEvent);
     // this._initialEvents = updateItem(this._initialEvents, updatedEvent);
     this._eventModel.forEach((eventModel) => {
       updateItem(eventModel.dayEvents, updatedEvent);

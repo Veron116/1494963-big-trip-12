@@ -40,17 +40,13 @@ const createDayEvent = ({
               </p>
               <h4 class="visually-hidden">Offers:</h4>
               <ul class="event__selected-offers">
-                  ${Array.from(offers)
-                    .map(
-                        (item) => `<li class="event__offer">
+                  ${Array.from(offers).map((item) =>
+                    `<li class="event__offer">
                   <span class="event__offer-title">${item.name}</span>
                   &plus;
                   &euro;&nbsp;<span class="event__offer-price">${item.price}</span>
-              </li>`
-                    )
-                    .join(
-                        ``
-                    )}</ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
+              </li>`).join(``)}
+              </ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
 export default class DayEvent extends Abstract {
