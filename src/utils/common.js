@@ -24,7 +24,8 @@ export const addEventTypeLabel = (type, transpors, services) => {
   if (services.includes(type)) {
     return `${type} in`;
   }
-  if (transpors.includes(type)) {
-    return `${type} to`;
-  }
+  // if (transpors.includes(type)) {
+  //   return `${type} to`;
+  // }
+  return `${type} to`;
 };

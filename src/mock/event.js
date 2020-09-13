@@ -9,7 +9,6 @@ import {
   generateDestinationInfo,
   generatePhotoSrcs,
   generateRandomDate,
-  getRandomArray
 } from '../utils/event-utils';
 import {
   TRANSPORT_TYPE,
@@ -24,6 +23,16 @@ const generateCheckinType = () => {
   return getRandomItem(checkinTypes);
 };
 
+const generateOffers = (type) => {
+  return OFFERS.get(type).map((offer) => {
+    return Object.assign({
+      checked: Boolean(getRandomInteger())
+    },
+    offer
+    );
+  });
+};
+
 export const generateEvent = () => {
   const startDate = generateRandomDate(TRIP_DAYS_COUNT);
   const msInd = getRandomInteger(20, 180) * 60 * 1000;
@@ -31,6 +40,7 @@ export const generateEvent = () => {
   const msIndInHours = msInd / 1000 / 60 / 60;
   const hours = Math.trunc(msIndInHours);
   const minutes = Math.trunc((msIndInHours - hours) * 60);
+  const checkinType = generateCheckinType();
 
   return {
     id: uuidv4(),
@@ -40,9 +50,9 @@ export const generateEvent = () => {
     minutes,
     description: generateDestinationInfo(),
     photos: generatePhotoSrcs(),
-    checkinType: generateCheckinType(),
+    checkinType,
     city: getRandomItem(CITIES),
-    offers: getRandomArray(OFFERS),
+    offers: generateOffers(checkinType),
     price: getRandomInteger(10, 900),
     isFavorite: false,
   };
