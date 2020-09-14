@@ -301,7 +301,7 @@ export default class EventEdit extends Smart {
     this.updateData({
       checkinType: type,
       offers
-    }, true);
+    }, false);
   }
 
   _offersChangeHandler(evt) {
