@@ -9,7 +9,8 @@ import {
 import {
   addEventTypeLabel
 } from '../utils/common';
-
+import flatpickr from "flatpickr";
+import "../../node_modules/flatpickr/dist/flatpickr.min.css";
 
 /**
  *
@@ -157,6 +158,8 @@ export default class EventEdit extends Smart {
     super();
 
     this._data = EventEdit.parseEventToData(event);
+    this._startDatepicker = null;
+    this._endDatepicker = null;
     this._transports = transports;
     this._services = services;
     this._cities = cities;
@@ -170,8 +173,11 @@ export default class EventEdit extends Smart {
     this._offersChangeHandler = this._offersChangeHandler.bind(this);
     this._destinationChangeHandler = this._destinationChangeHandler.bind(this);
     this._eventTypeHandler = this._eventTypeHandler.bind(this);
+    this._startDateChangeHandler = this._startDateChangeHandler.bind(this);
+    this._endDateChangeHandler = this._endDateChangeHandler.bind(this);
 
     this.setInnerHandlers();
+    this._setDatepicker();
   }
 
   _getTemplate() {
@@ -191,8 +197,49 @@ export default class EventEdit extends Smart {
     }
   }
 
+  _setDatepicker() {
+    if (this._startDatepicker || this._endDatepicker) {
+      this._startDatepicker.destroy();
+      this._startDatepicker = null;
+      this._endDatepicker.destroy();
+      this._endDatepicker = null;
+    }
+
+    this._startDatepicker = flatpickr(
+      this.getElement().querySelector(`[name="event-start-time"]`), {
+        enableTime: true,
+        dateFormat: `d/m/y H:i`,
+        time_24hr: true,
+        defaultDate: this._data.startDate,
+        onChange: this._startDateChangeHandler
+      }
+    );
+    this._endDatepicker = flatpickr(
+      this.getElement().querySelector(`[name="event-end-time"]`), {
+        enableTime: true,
+        dateFormat: `d/m/y H:i`,
+        time_24hr: true,
+        defaultDate: this._data.endDate,
+        onChange: this._endDateChangeHandler
+      }
+    );
+  }
+
+  _startDateChangeHandler([userStartDate]) {
+    this.updateData({
+      startDate: new Date(userStartDate).getTime()
+    }, true);
+  }
+
+  _endDateChangeHandler([userEndDate]) {
+    this.updateData({
+      endDate: new Date(userEndDate).getTime()
+    }, true);
+  }
+
   restoreHandlers() {
     this.setInnerHandlers();
+    this._setDatepicker();
     this.setResetClickHandler(this._callback.eventClick);
     this.setEditSubmitHandler(this._callback.eventSubmit);
   }
@@ -248,9 +295,9 @@ export default class EventEdit extends Smart {
 
     const offers = OFFERS.get(type).map((offer) => {
       return Object.assign({
-        checked: false
-      },
-      offer
+          checked: false
+        },
+        offer
       );
     });
 
@@ -288,7 +335,7 @@ export default class EventEdit extends Smart {
 
   reset(event) {
     this.updateData(
-        EventEdit.parseEventToData(event)
+      EventEdit.parseEventToData(event)
     );
   }
 }
