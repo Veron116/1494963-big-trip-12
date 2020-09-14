@@ -54,7 +54,6 @@ export default class DayEvent extends Abstract {
     super();
     this._event = event;
     this._clickHandler = this._clickHandler.bind(this);
-    console.log('day: ', this._event);
   }
 
   _getTemplate() {

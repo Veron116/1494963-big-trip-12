@@ -1,10 +1,5 @@
 import Abstract from './abstract';
 
-/**
- *
- * TODO переделать даты вместо slice на встроенные методы даты
- */
-
 const createDayList = () => {
   return `<ul class="trip-days"></ul>`;
 };

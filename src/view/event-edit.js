@@ -14,10 +14,10 @@ import flatpickr from "flatpickr";
 import "../../node_modules/flatpickr/dist/flatpickr.min.css";
 
 
-const createWaypointTemplate = (waypoint) => {
+const createWaypointTemplate = (waypoint, id) => {
   return `<div class="event__type-item">
-    <input id="event-type-${waypoint}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${waypoint}">
-    <label class="event__type-label  event__type-label--${waypoint.toLowerCase()}" for="event-type-${waypoint}-1">${waypoint.toLowerCase()}</label>
+    <input id="event-type-${waypoint}-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${waypoint}">
+    <label class="event__type-label  event__type-label--${waypoint.toLowerCase()}" for="event-type-${waypoint}-${id}">${waypoint.toLowerCase()}</label>
 </div>`;
 };
 const createCityTemplate = (city) => {
@@ -38,19 +38,19 @@ const createEventEditTemplate = ({
   city,
   checkinType
 }, transports, services, cities, srcs) => {
-  const transportTemplate = transports.map((transport) => createWaypointTemplate(transport)).join(``);
-  const serviceTemplate = services.map((service) => createWaypointTemplate(service)).join(``);
+  const transportTemplate = transports.map((transport) => createWaypointTemplate(transport, id)).join(``);
+  const serviceTemplate = services.map((service) => createWaypointTemplate(service, id)).join(``);
   const cityTemplate = cities.map((it) => createCityTemplate(it)).join(``);
   const photoTemplate = srcs.map((src) => createPhotoTemplate(src));
 
   return `<form class="trip-events__item  event  event--edit" action="#" method="post">
       <header class="event__header">
           <div class="event__type-wrapper">
-              <label class="event__type  event__type-btn" for="event-type-toggle-1">
+              <label class="event__type  event__type-btn" for="event-type-toggle-${id}">
                   <span class="visually-hidden">Choose event type</span>
                   <img class="event__type-icon" width="17" height="17" src="img/icons/${checkinType.toLowerCase()}.png" alt="Event type icon"></img>
               </label>
-              <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
+              <input class="event__type-toggle  visually-hidden" id="event-type-toggle-${id}" type="checkbox">
 
               <div class="event__type-list">
                   <fieldset class="event__type-group">
@@ -66,11 +66,11 @@ const createEventEditTemplate = ({
           </div>
 
           <div class="event__field-group  event__field-group--destination">
-              <label class="event__label  event__type-output" for="event-destination-1">
+              <label class="event__label  event__type-output" for="event-destination-${id}">
                   ${addEventTypeLabel(checkinType, services)}
               </label>
-              <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
-              <datalist id="destination-list-1">
+              <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value="${city}" list="destination-list-${id}">
+              <datalist id="destination-list-${id}">
                   ${cityTemplate}
               </datalist>
           </div>
@@ -299,7 +299,7 @@ export default class EventEdit extends Smart {
     });
 
     this.updateData({
-      type,
+      checkinType: type,
       offers
     });
   }
