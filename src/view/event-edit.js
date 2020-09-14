@@ -124,11 +124,11 @@ const createEventEditTemplate = ({
         <div class="event__available-offers">
         ${offers.map((offer) => `<div class="event__offer-selector">
                                 <input class="event__offer-checkbox  visually-hidden"
-                                id="event-offer-${offer.name}-1"
+                                id="event-offer-${offer.name}-${id}"
                                 type="checkbox"
                                 name="${offer.name}"
                                 ${offer.checked ? `checked` : ``}>
-                    <label class="event__offer-label" for="event-offer-${offer.name}-1">
+                    <label class="event__offer-label" for="event-offer-${offer.name}-${id}">
                       <span class="event__offer-title">${offer.name}</span> &plus; &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
                     </label>
                   </div>`).join(``)}
@@ -301,7 +301,7 @@ export default class EventEdit extends Smart {
     this.updateData({
       checkinType: type,
       offers
-    });
+    }, true);
   }
 
   _offersChangeHandler(evt) {
@@ -310,6 +310,7 @@ export default class EventEdit extends Smart {
     }
 
     const newOffers = this._data.offers.map((offer) => Object.assign({}, offer));
+    console.log(newOffers);
     const offer = newOffers.find((it) => it.name === evt.target.name);
 
     offer.checked = !offer.checked;

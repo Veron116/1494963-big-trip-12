@@ -18,7 +18,19 @@ const createDayEvent = ({
   // console.log('minutes', minutes);
   const hours = new Date(Math.abs(startDate - endDate)).getHours();
   const minutes = new Date(Math.abs(startDate - endDate)).getMinutes();
+  const generateSelectedOffers = () => {
+    return Array.from(offers).map((offer) => {
+      return offer.checked ? (
+        `<li class="event__offer">
+          <span class="event__offer-title">${offer.name}</span>
+          &plus;
+          &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+        </li>`) : ``;
+    }).join(``);
+
+  }
   // console.log('day: ', startDate, endDate);
+
 
 
   return `<li class="trip-days__item  day">
@@ -40,12 +52,7 @@ const createDayEvent = ({
               </p>
               <h4 class="visually-hidden">Offers:</h4>
               <ul class="event__selected-offers">
-                  ${Array.from(offers).map((item) =>
-    `<li class="event__offer">
-                  <span class="event__offer-title">${item.name}</span>
-                  &plus;
-                  &euro;&nbsp;<span class="event__offer-price">${item.price}</span>
-              </li>`).join(``)}
+                  ${generateSelectedOffers()}
               </ul><button class="event__rollup-btn" type="button"><span class="visually-hidden">Open event</span></button></div></li>`;
 };
 
