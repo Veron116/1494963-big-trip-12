@@ -8,6 +8,8 @@ import {
 import {
   generateEvent
 } from '../mock/event';
+import moment from "moment";
+
 
 export const isChecked = () => {
   return Boolean(getRandomInteger(0, 1));
@@ -26,7 +28,7 @@ export const generateDestinationInfo = () => {
   const descriptions = description.split(/\.\s*/g).filter((s) => s);
 
   shuffle(descriptions);
-  return `${descriptions.slice(0, getRandomInteger(0, 5)).join(`. `)}.`;
+  return `${descriptions.slice(0, getRandomInteger(0, 5)).join(`. `)}`;
 };
 
 export const generatePhotoSrcs = () => {
@@ -66,6 +68,17 @@ export const countDates = (tripDaysCount) => {
     endDate,
     dateList: fillDateList(),
   };
+};
+
+export const formatDate = (date, showOnlyTime) => {
+  if (!(date instanceof Date)) {
+    return ``;
+  }
+
+  if (showOnlyTime) {
+    return moment.unix(date).format(`hh:mm`);
+  }
+  return moment.unix(date).format(`DD-MM-YYYY hh:mm`);
 };
 
 export const getRandomItem = (array) => {

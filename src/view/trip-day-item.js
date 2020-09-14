@@ -1,15 +1,14 @@
 import Abstract from './abstract';
+import {
+  formatDate
+} from '../utils/event-utils';
 
-/**
- *
- * TODO переделать даты вместо slice на встроенные методы даты
- */
 
 const createTripDayItem = (date, index) => {
   return `<li class="trip-days__item  day">
                 <div class="day__info">
                 <span class="day__counter">${index + 1}</span>
-                <time class="day__date" datetime="${new Date(date).toString().slice(4, 11)}">
+                <time class="day__date" datetime="${formatDate(new Date(date))}">
                 ${date}
                 </time>
                 </div>
@@ -28,8 +27,8 @@ export default class TripDayItem extends Abstract {
 
   _getTemplate() {
     return createTripDayItem(
-        this._date,
-        this._index
+      this._date,
+      this._index
     );
   }
 

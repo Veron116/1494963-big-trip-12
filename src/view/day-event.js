@@ -1,22 +1,26 @@
 import Abstract from './abstract';
+import {
+  formatDate
+} from '../utils/event-utils';
 
-// импортнуть константы для формы
-/*
- *
- * TODO переделать даты вместо slice на встроенные методы даты
- * - переделать логику с офферами и прайсом
- */
 const createDayEvent = ({
   checkinType,
   city,
   startDate,
   endDate,
-  hours,
-  minutes,
+  // hours,
+  // minutes,
   offers,
   price
 }) => {
-  // console.log(endDate - startDate);
+  // console.log(Math.abs(startDate - endDate));
+  // console.log('hours', hours);
+  // console.log('minutes', minutes);
+  const hours = new Date(Math.abs(startDate - endDate)).getHours();
+  const minutes = new Date(Math.abs(startDate - endDate)).getMinutes();
+  // console.log('day: ', startDate, endDate);
+
+
   return `<li class="trip-days__item  day">
             <div class="event">
               <div class="event__type">
@@ -25,13 +29,9 @@ const createDayEvent = ({
               <h3 class="event__title">${checkinType} to ${city}</h3>
               <div class="event__schedule">
                   <p class="event__time">
-                      <time class="event__start-time" datetime="${new Date(startDate).toString().slice(4, 21)}">${new Date(startDate)
-    .toTimeString()
-    .slice(0, 5)}</time>
+                      <time class="event__start-time" datetime="${formatDate(new Date(startDate))}">${formatDate(new Date(startDate))}</time>
                       &mdash;
-                      <time class="event__end-time" datetime="${new Date(endDate).toString().slice(4, 21)}">${new Date(endDate)
-    .toTimeString()
-    .slice(0, 5)}</time>
+                      <time class="event__end-time" datetime="${formatDate(new Date(endDate))}">${formatDate(new Date(endDate))}</time>
                   </p>
                   <p class="event__duration">${hours}H ${minutes}M</p>
               </div>
@@ -54,6 +54,7 @@ export default class DayEvent extends Abstract {
     super();
     this._event = event;
     this._clickHandler = this._clickHandler.bind(this);
+    console.log('day: ', this._event);
   }
 
   _getTemplate() {

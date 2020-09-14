@@ -20,12 +20,10 @@ export const updateItem = (items, update) => {
   ];
 };
 
-export const addEventTypeLabel = (type, transpors, services) => {
+export const addEventTypeLabel = (type, services) => {
   if (services.includes(type)) {
     return `${type} in`;
   }
-  // if (transpors.includes(type)) {
-  //   return `${type} to`;
-  // }
+
   return `${type} to`;
 };

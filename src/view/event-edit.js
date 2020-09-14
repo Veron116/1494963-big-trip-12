@@ -4,7 +4,8 @@ import {
 } from '../const';
 import {
   generateDestinationInfo,
-  generatePhotoSrcs
+  generatePhotoSrcs,
+  formatDate
 } from '../utils/event-utils';
 import {
   addEventTypeLabel
@@ -12,10 +13,6 @@ import {
 import flatpickr from "flatpickr";
 import "../../node_modules/flatpickr/dist/flatpickr.min.css";
 
-/**
- *
- * TODO переделать даты вместо slice на встроенные методы даты
- */
 
 const createWaypointTemplate = (waypoint) => {
   return `<div class="event__type-item">
@@ -70,7 +67,7 @@ const createEventEditTemplate = ({
 
           <div class="event__field-group  event__field-group--destination">
               <label class="event__label  event__type-output" for="event-destination-1">
-                  ${addEventTypeLabel(checkinType, transports, services)}
+                  ${addEventTypeLabel(checkinType, services)}
               </label>
               <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
               <datalist id="destination-list-1">
@@ -79,25 +76,25 @@ const createEventEditTemplate = ({
           </div>
 
           <div class="event__field-group  event__field-group--time">
-              <label class="visually-hidden" for="event-start-time-1">
+              <label class="visually-hidden" for="event-start-time-${id}">
                   From
               </label>
               <input
               class="event__input  event__input--time"
-              id="event-start-time-1"
+              id="event-start-time-${id}"
               type="text"
               name="event-start-time"
-              value="${new Date(startDate).toString().slice(4, 21)}">
+              value="${formatDate(new Date(startDate))}">
               &mdash;
-              <label class="visually-hidden" for="event-end-time-1">
+              <label class="visually-hidden" for="event-end-time-${id}">
                   To
               </label>
               <input
               class="event__input  event__input--time"
-              id="event-end-time-1"
+              id="event-end-time-${id}"
               type="text"
               name="event-end-time"
-              value="${new Date(endDate).toString().slice(4, 21)}">
+              value="${formatDate(new Date(endDate))}">
           </div>
 
           <div class="event__field-group  event__field-group--price">
