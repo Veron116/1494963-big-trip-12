@@ -88,6 +88,14 @@ export const formatDate = (date) => {
   return moment(date).format(`DD/MM/YY HH:mm`);
 };
 
+export const shortFormatDate = (date) => {
+  if (!(date instanceof Date)) {
+    return ``;
+  }
+
+  return moment(date).format(`MMM DD`);
+};
+
 export const countEventDuraction = (eventDuration) => {
   const duration = moment.duration(eventDuration);
 
