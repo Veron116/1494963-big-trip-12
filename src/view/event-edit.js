@@ -208,6 +208,7 @@ export default class EventEdit extends Smart {
         dateFormat: `d/m/y H:i`,
         time_24hr: true,
         defaultDate: this._data.startDate,
+        minDate: new Date(),
         onChange: this._startDateChangeHandler
       }
     );
@@ -217,6 +218,7 @@ export default class EventEdit extends Smart {
         dateFormat: `d/m/y H:i`,
         time_24hr: true,
         defaultDate: this._data.endDate,
+        minDate: this._data.startDate,
         onChange: this._endDateChangeHandler
       }
     );
@@ -224,13 +226,13 @@ export default class EventEdit extends Smart {
 
   _startDateChangeHandler([userStartDate]) {
     this.updateData({
-      startDate: new Date(userStartDate).getTime()
+      startDate: new Date(userStartDate).getTime(),
     }, true);
   }
 
   _endDateChangeHandler([userEndDate]) {
     this.updateData({
-      endDate: new Date(userEndDate).getTime()
+      endDate: new Date(userEndDate).getTime(),
     }, true);
   }
 

@@ -1,6 +1,7 @@
 import Abstract from './abstract';
 import {
-  formatDate
+  formatDate,
+  countEventDuraction,
 } from '../utils/event-utils';
 
 const createDayEvent = ({
@@ -8,16 +9,11 @@ const createDayEvent = ({
   city,
   startDate,
   endDate,
-  // hours,
-  // minutes,
   offers,
   price
 }) => {
-  // console.log(Math.abs(startDate - endDate));
-  // console.log('hours', hours);
-  // console.log('minutes', minutes);
-  const hours = new Date(Math.abs(startDate - endDate)).getHours();
-  const minutes = new Date(Math.abs(startDate - endDate)).getMinutes();
+  const eventDuration = endDate - startDate;
+
   const generateSelectedOffers = () => {
     return Array.from(offers).map((offer) => {
       return offer.checked ? (
@@ -29,9 +25,6 @@ const createDayEvent = ({
     }).join(``);
 
   }
-  // console.log('day: ', startDate, endDate);
-
-
 
   return `<li class="trip-days__item  day">
             <div class="event">
@@ -45,7 +38,7 @@ const createDayEvent = ({
                       &mdash;
                       <time class="event__end-time" datetime="${formatDate(new Date(endDate))}">${formatDate(new Date(endDate))}</time>
                   </p>
-                  <p class="event__duration">${hours}H ${minutes}M</p>
+                  <p class="event__duration">${countEventDuraction(eventDuration)}</p>
               </div>
               <p class="event__price">
               &euro;&nbsp;<span class="event__price-value">${price}</span>

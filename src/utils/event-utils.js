@@ -80,15 +80,24 @@ export const countDates = (tripDaysCount) => {
   };
 };
 
-export const formatDate = (date, showOnlyTime) => {
+export const formatDate = (date) => {
   if (!(date instanceof Date)) {
     return ``;
   }
 
-  if (showOnlyTime) {
-    return moment.unix(date).format(`hh:mm`);
-  }
-  return moment.unix(date).format(`DD-MM-YYYY hh:mm`);
+  return moment(date).format(`DD/MM/YY HH:mm`);
+};
+
+export const countEventDuraction = (eventDuration) => {
+  const duration = moment.duration(eventDuration);
+
+  return [
+    [duration.days(), `D`],
+    [duration.hours(), `H`],
+    [duration.minutes(), `M`],
+  ].map(([number, letter]) => {
+    return number ? `${number}${letter}` : ``;
+  }).filter(Boolean).join(` `);
 };
 
 export const getRandomItem = (array) => {
