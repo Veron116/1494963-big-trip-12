@@ -24,7 +24,7 @@ const createDayEvent = ({
         </li>`) : ``;
     }).join(``);
 
-  }
+  };
 
   return `<li class="trip-days__item  day">
             <div class="event">

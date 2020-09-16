@@ -26,9 +26,9 @@ const generateCheckinType = () => {
 const generateOffers = (type) => {
   return OFFERS.get(type).map((offer) => {
     return Object.assign({
-        checked: Boolean(getRandomInteger())
-      },
-      offer
+      checked: Boolean(getRandomInteger())
+    },
+    offer
     );
   });
 };

@@ -203,24 +203,24 @@ export default class EventEdit extends Smart {
     }
 
     this._startDatepicker = flatpickr(
-      this.getElement().querySelector(`[name="event-start-time"]`), {
-        enableTime: true,
-        dateFormat: `d/m/y H:i`,
-        time_24hr: true,
-        defaultDate: this._data.startDate,
-        minDate: new Date(),
-        onChange: this._startDateChangeHandler
-      }
+        this.getElement().querySelector(`[name="event-start-time"]`), {
+          "enableTime": true,
+          "dateFormat": `d/m/y H:i`,
+          "time_24hr": true,
+          "defaultDate": this._data.startDate,
+          "minDate": new Date(),
+          "onChange": this._startDateChangeHandler
+        }
     );
     this._endDatepicker = flatpickr(
-      this.getElement().querySelector(`[name="event-end-time"]`), {
-        enableTime: true,
-        dateFormat: `d/m/y H:i`,
-        time_24hr: true,
-        defaultDate: this._data.endDate,
-        minDate: this._data.startDate,
-        onChange: this._endDateChangeHandler
-      }
+        this.getElement().querySelector(`[name="event-end-time"]`), {
+          "enableTime": true,
+          "dateFormat": `d/m/y H:i`,
+          "time_24hr": true,
+          "defaultDate": this._data.endDate,
+          "minDate": this._data.startDate,
+          "onChange": this._endDateChangeHandler
+        }
     );
   }
 
@@ -294,9 +294,9 @@ export default class EventEdit extends Smart {
 
     const offers = OFFERS.get(type).map((offer) => {
       return Object.assign({
-          checked: false
-        },
-        offer
+        checked: false
+      },
+      offer
       );
     });
 
@@ -312,7 +312,6 @@ export default class EventEdit extends Smart {
     }
 
     const newOffers = this._data.offers.map((offer) => Object.assign({}, offer));
-    console.log(newOffers);
     const offer = newOffers.find((it) => it.name === evt.target.name);
 
     offer.checked = !offer.checked;
@@ -335,7 +334,7 @@ export default class EventEdit extends Smart {
 
   reset(event) {
     this.updateData(
-      EventEdit.parseEventToData(event)
+        EventEdit.parseEventToData(event)
     );
   }
 }

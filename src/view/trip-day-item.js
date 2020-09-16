@@ -27,8 +27,8 @@ export default class TripDayItem extends Abstract {
 
   _getTemplate() {
     return createTripDayItem(
-      this._date,
-      this._index
+        this._date,
+        this._index
     );
   }
 
